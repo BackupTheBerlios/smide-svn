@@ -436,71 +436,73 @@ type
     constructor Create(TypeHandle: TRuntimeTypeHandle; TypeInfoData: TRuntimeTypeInfoData); virtual;
 
   protected // IntegerType support
-    function GetMinInt64Value: Int64; virtual;
-    function GetMaxInt64Value: Int64; virtual;
-    function GetMinValue: Integer; virtual;
-    function GetMaxValue: Integer; virtual;
+    function get_MinInt64Value: Int64; virtual;
+    function get_MaxInt64Value: Int64; virtual;
+    function get_MinValue: Integer; virtual;
+    function get_MaxValue: Integer; virtual;
   public
-    property MinValue: Integer read GetMinValue;
-    property MaxValue: Integer read GetMaxValue;
-    property MinInt64Value: Int64 read GetMinInt64Value;
-    property MaxInt64Value: Int64 read GetMaxInt64Value;
+    property MinValue: Integer read get_MinValue;
+    property MaxValue: Integer read get_MaxValue;
+    property MinInt64Value: Int64 read get_MinInt64Value;
+    property MaxInt64Value: Int64 read get_MaxInt64Value;
   protected // ShortString Support
-    function GetMaxLength: Byte; virtual;
+    function get_MaxLength: Byte; virtual;
   public
-    property MaxLength: Byte read GetMaxLength;
+    property MaxLength: Byte read get_MaxLength;
   protected // TMemberInfo overrides
     function get_MemberType: TMemberType; override;
     function get_Name: WideString; override;
     function get_DeclaringType: TType; override;
     function get_ReflectedType: TType; override;
   protected // Name and Namespace
-    function GetFullName: WideString; virtual;
-    function GetNamespace: WideString; virtual;
-    function GetAssemblyQualifiedName: WideString; virtual;
+    function get_FullName: WideString; virtual;
+    function get_Namespace: WideString; virtual;
+    function get_AssemblyQualifiedName: WideString; virtual;
   public
-    property Namespace: WideString read GetNamespace;
-    property FullName: WideString read GetFullName;
-    property AssemblyQualifiedName: WideString read GetAssemblyQualifiedName;
+    property Namespace: WideString read get_Namespace;
+    property FullName: WideString read get_FullName;
+    property AssemblyQualifiedName: WideString read get_AssemblyQualifiedName;
   protected
-    function GetBaseType: TType; virtual; abstract;
+    function get_BaseType: TType; virtual; abstract;
   public
-    property BaseType: TType read GetBaseType;
+    property BaseType: TType read get_BaseType;
 
   protected // Attributes
-    function GetAttributes: TTypeAttributes; virtual;
-    function GetHasElementType: Boolean; virtual;
-    function GetIsAbstract: Boolean; virtual;
-    function GetIsArray: Boolean; virtual;
-    function GetIsByRef: Boolean; virtual;
-    function GetIsClass: Boolean; virtual;
-    function GetIsEnum: Boolean; virtual;
-    function GetIsInterface: Boolean; virtual;
-    function GetIsOrdinal: Boolean; virtual;
-    function GetIsPointer: Boolean; virtual;
-    function GetIsPrimitive: Boolean; virtual;
-    function GetIsPublic: Boolean; virtual;
-    function GetIsSealed: Boolean; virtual;
-    function GetIsSerializable: Boolean; virtual;
-    function GetIsSpecialName: Boolean; virtual;
-    function GetIsValueType: Boolean; virtual;
+    function get_Attributes: TTypeAttributes; virtual;
+    function get_HasElementType: Boolean; virtual;
+    function get_IsAbstract: Boolean; virtual;
+    function get_IsArray: Boolean; virtual;
+    function get_IsSet: Boolean; virtual;
+    function get_IsByRef: Boolean; virtual;
+    function get_IsClass: Boolean; virtual;
+    function get_IsEnum: Boolean; virtual;
+    function get_IsInterface: Boolean; virtual;
+    function get_IsOrdinal: Boolean; virtual;
+    function get_IsPointer: Boolean; virtual;
+    function get_IsPrimitive: Boolean; virtual;
+    function get_IsPublic: Boolean; virtual;
+    function get_IsSealed: Boolean; virtual;
+    function get_IsSerializable: Boolean; virtual;
+    function get_IsSpecialName: Boolean; virtual;
+    function get_IsValueType: Boolean; virtual;
   public
-    property Attributes: TTypeAttributes read GetAttributes;
-    property IsPublic: Boolean read GetIsPublic;
-    property IsClass: Boolean read GetIsClass;
-    property IsInterface: Boolean read GetIsInterface;
-    property IsValueType: Boolean read GetIsValueType;
-    property IsAbstract: Boolean read GetIsAbstract;
-    property IsSealed: Boolean read GetIsSealed;
-    property IsEnum: Boolean read GetIsEnum;
-    property IsSpecialName: Boolean read GetIsSpecialName;
-    property IsSerializable: Boolean read GetIsSerializable;
-    property IsArray: Boolean read GetIsArray;
-    property IsByRef: Boolean read GetIsByRef;
-    property IsPointer: Boolean read GetIsPointer;
-    property IsPrimitive: Boolean read GetIsPrimitive;
-    property IsOrdinal: Boolean read GetIsOrdinal;
-    property HasElementType: Boolean read GetHasElementType;
+    property Attributes: TTypeAttributes read get_Attributes;
+    property IsPublic: Boolean read get_IsPublic;
+    property IsClass: Boolean read get_IsClass;
+    property IsInterface: Boolean read get_IsInterface;
+    property IsValueType: Boolean read get_IsValueType;
+    property IsAbstract: Boolean read get_IsAbstract;
+    property IsSealed: Boolean read get_IsSealed;
+    property IsEnum: Boolean read get_IsEnum;
+    property IsSpecialName: Boolean read get_IsSpecialName;
+    property IsSerializable: Boolean read get_IsSerializable;
+    property IsArray: Boolean read get_IsArray;
+    property IsByRef: Boolean read get_IsByRef;
+    property IsPointer: Boolean read get_IsPointer;
+    property IsPrimitive: Boolean read get_IsPrimitive;
+    property IsOrdinal: Boolean read get_IsOrdinal;
+    property HasElementType: Boolean read get_HasElementType;
+    property IsSet: Boolean read get_IsSet;
   public
     function GetElementType: TType; virtual;
   public
@@ -807,14 +809,14 @@ begin
   raise ENotSupported.Create('IReflect.GetFields');
 end;
 
-function TType.GetMaxLength: Byte;
+function TType.get_MaxLength: Byte;
 begin
-  raise ENotSupported.Create('TType.GetMaxLength');
+  raise ENotSupported.Create('TType.get_MaxLength');
 end;
 
-function TType.GetMaxValue: Integer;
+function TType.get_MaxValue: Integer;
 begin
-  raise ENotSupported.Create('TType.GetMaxValue');
+  raise ENotSupported.Create('TType.get_MaxValue');
 end;
 
 function TType.GetMember(Name: WideString; BindingAttr: TBindingFlags): IMemberInfoCollection;
@@ -843,9 +845,9 @@ begin
   raise ENotSupported.Create('IReflect.GetMethods');
 end;
 
-function TType.GetMinValue: Integer;
+function TType.get_MinValue: Integer;
 begin
-  raise ENotSupported.Create('TType.GetMinValue');
+  raise ENotSupported.Create('TType.get_MinValue');
 end;
 
 function TType.GetProperties(BindingAttr: TBindingFlags): IPropertyInfoCollection;
@@ -954,17 +956,17 @@ begin
   Result := FormatValueToString('', Value, nil);
 end;
 
-function TType.GetMaxInt64Value: Int64;
+function TType.get_MaxInt64Value: Int64;
 begin
-  raise ENotSupported.Create('TType.GetMaxInt64Value');
+  raise ENotSupported.Create('TType.get_MaxInt64Value');
 end;
 
-function TType.GetMinInt64Value: Int64;
+function TType.get_MinInt64Value: Int64;
 begin
-  raise ENotSupported.Create('TType.GetMinInt64Value');
+  raise ENotSupported.Create('TType.get_MinInt64Value');
 end;
 
-function TType.GetFullName: WideString;
+function TType.get_FullName: WideString;
 begin
   if Namespace = '' then
     Result := Name
@@ -977,19 +979,19 @@ begin
   Result := RuntimeTypeHandle.Name;
 end;
 
-function TType.GetNamespace: WideString;
+function TType.get_Namespace: WideString;
 begin
   Result := '';
 end;
 
-function TType.GetAssemblyQualifiedName: WideString;
+function TType.get_AssemblyQualifiedName: WideString;
 begin
-  raise ENotImplemented.Create('TType.GetAssemblyQualifiedName');
+  raise ENotImplemented.Create('TType.get_AssemblyQualifiedName');
 end;
 
-function TType.GetAttributes: TTypeAttributes;
+function TType.get_Attributes: TTypeAttributes;
 begin
-  raise ENotSupported.Create('TType.GetAttributes');
+  raise ENotSupported.Create('TType.get_Attributes');
 end;
 
 function TType.GetElementType: TType;
@@ -997,79 +999,84 @@ begin
   raise ENotImplemented.Create('TType.GetElementType');
 end;
 
-function TType.GetHasElementType: Boolean;
+function TType.get_HasElementType: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetHasElementType');
+  raise ENotImplemented.Create('TType.get_HasElementType');
 end;
 
-function TType.GetIsAbstract: Boolean;
+function TType.get_IsAbstract: Boolean;
 begin
   Result := taAbstract in Attributes;
 end;
 
-function TType.GetIsArray: Boolean;
+function TType.get_IsArray: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsArray');
+  raise ENotImplemented.Create('TType.get_IsArray');
 end;
 
-function TType.GetIsByRef: Boolean;
+function TType.get_IsSet: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsByRef');
+  raise ENotImplemented.Create('TType.get_IsSet');
 end;
 
-function TType.GetIsClass: Boolean;
+function TType.get_IsByRef: Boolean;
+begin
+  raise ENotImplemented.Create('TType.get_IsByRef');
+end;
+
+function TType.get_IsClass: Boolean;
 begin
   Result := (taClass in Attributes) and not IsValueType;
 end;
 
-function TType.GetIsEnum: Boolean;
+function TType.get_IsEnum: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsEnum');
+  raise ENotImplemented.Create('TType.get_IsEnum');
 end;
 
-function TType.GetIsInterface: Boolean;
+function TType.get_IsInterface: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsInterface');
+  raise ENotImplemented.Create('TType.get_IsInterface');
 end;
 
-function TType.GetIsOrdinal: Boolean;
+function TType.get_IsOrdinal: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsOrdinal');
+  raise ENotImplemented.Create('TType.get_IsOrdinal');
 end;
 
-function TType.GetIsPointer: Boolean;
+function TType.get_IsPointer: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsPointer');
+  raise ENotImplemented.Create('TType.get_IsPointer');
 end;
 
-function TType.GetIsPrimitive: Boolean;
+function TType.get_IsPrimitive: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsPrimitive');
+  raise ENotImplemented.Create('TType.get_IsPrimitive');
 end;
 
-function TType.GetIsPublic: Boolean;
+function TType.get_IsPublic: Boolean;
 begin
   Result := taPublic in Attributes;
 end;
 
-function TType.GetIsSealed: Boolean;
+function TType.get_IsSealed: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsSealed');
+  raise ENotImplemented.Create('TType.get_IsSealed');
 end;
 
-function TType.GetIsSerializable: Boolean;
+function TType.get_IsSerializable: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsSerializable');
+  raise ENotImplemented.Create('TType.get_IsSerializable');
 end;
 
-function TType.GetIsSpecialName: Boolean;
+function TType.get_IsSpecialName: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsSpecialName');
+  raise ENotImplemented.Create('TType.get_IsSpecialName');
 end;
 
-function TType.GetIsValueType: Boolean;
+function TType.get_IsValueType: Boolean;
 begin
-  raise ENotImplemented.Create('TType.GetIsValueType');
+  raise ENotImplemented.Create('TType.get_IsValueType');
 end;
 
 function TType.get_DeclaringType: TType;

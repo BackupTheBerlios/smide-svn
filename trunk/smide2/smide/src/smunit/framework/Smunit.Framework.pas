@@ -1435,6 +1435,8 @@ end;
 
 procedure TTestSuite.AddTest(Test: ITest);
 begin
+  if Test=nil then
+    raise EArgumentNil.Create('Test');
   FTests.Add(Test);
 end;
 

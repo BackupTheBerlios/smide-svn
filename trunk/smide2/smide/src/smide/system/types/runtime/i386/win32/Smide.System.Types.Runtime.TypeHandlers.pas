@@ -23,7 +23,7 @@ type
 
     function get_TypeSize: Integer; override;
   protected
-    function GetBaseType: TType; override;
+    function get_BaseType: TType; override;
   end;
 
   TVoidType = class(TPointerType)
@@ -31,7 +31,7 @@ type
 
   TValueType = class(TType)
   protected
-    function GetBaseType: TType; override;
+    function get_BaseType: TType; override;
   end;
 
   TDataType = class(TValueType)
@@ -58,9 +58,9 @@ type
     function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
   protected
-    function GetOrdinalKind: TOrdinalKind; virtual; abstract;
+    function get_OrdinalKind: TOrdinalKind; virtual; abstract;
   public
-    property OrdinalKind: TOrdinalKind read GetOrdinalKind;
+    property OrdinalKind: TOrdinalKind read get_OrdinalKind;
   end;
 
   TRangeOrdinalType = class(TOrdinalType)
@@ -162,10 +162,13 @@ type
   end;
 
   TEnumerationType = class(TRangeOrdinalType)
+  public
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
   end;
 
   TSetType = class(TOrdinalType)
+  public
+    function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
   end;
 
   TWideCharType = class(TRangeOrdinalType)
@@ -331,6 +334,7 @@ type
   end;
 
 implementation
+
 uses
   Smide.System,
   Smide.System.Common.Number,
@@ -385,7 +389,7 @@ begin
   Data := TTypeData(Value);
 end;
 
-function TPointerType.GetBaseType: TType;
+function TPointerType.get_BaseType: TType;
 begin
   Result := nil;
 end;
@@ -1069,7 +1073,7 @@ end;
 
 { TValueType }
 
-function TValueType.GetBaseType: TType;
+function TValueType.get_BaseType: TType;
 begin
   Result := nil;
 end;
@@ -1444,4 +1448,40 @@ begin
   raise EInvalidOperation.Create;
 end;
 
+{ TSetType }
+
+type
+  TIntegerSet = set of 0..SizeOf(Integer) * 8 - 1;
+
+function TSetType.FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString;
+var
+  S: TIntegerSet;
+  i: Integer;
+  v: Integer;
+begin
+  Result := '';
+  v := 0;
+  case OrdinalKind of
+    okUnsignedByte: v := Byte(Value);
+    okSignedByte: v := ShortInt(Value);
+    otUnsignedWord: v := Word(Value);
+    okSignedWord: v := SmallInt(Value);
+    otUnsignedLong: v := Cardinal(Value);
+    otSignedLong: v := Integer(Value);
+  else
+    raise EUnknownType.Create(Name);
+  end;
+
+  S := TIntegerSet(v);
+
+  for i := 0 to SizeOf(Integer) * 8 - 1 do
+    if i in S then
+    begin
+      if Result <> '' then
+        Result := Result + ', ';
+      Result := Result + GetElementType.ValueToString(i);
+    end;
+end;
+
 end.
+

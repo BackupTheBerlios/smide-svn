@@ -63,7 +63,7 @@ begin
     begin
       Info := TypeInfo;
       Inst := Obj;
-      Handler := nil;
+      Handler := Obj as ITypeHandler;
     end;
   end;
 end;
@@ -75,7 +75,7 @@ begin
   if GetTypeHandler(TypeInfo) <> nil then
     exit;
 
-  Result := AddType(TypeInfo, TReference.GetObject(Obj, ITypeHandler, TType));
+  Result := AddType(TypeInfo, TType(TReference.GetObject(Obj, ITypeHandler, TType)));
 
   if Result > -1 then
     TypeCache.FCache[Result].Handler := Obj;

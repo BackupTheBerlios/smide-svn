@@ -52,6 +52,7 @@ contains
   Smide.System.Runtime.Environment in '..\..\..\system\runtime\i386\win32\Smide.System.Runtime.Environment.pas',
   Smide.System.Globalization in '..\..\..\system\globalization\Smide.System.Globalization.pas',
   Smide.System in '..\..\..\system\Smide.System.pas',
-  Types;
+  Types,
+  Smide.System.Runtime.Reference in '..\..\..\system\runtime\i386\win32\Smide.System.Runtime.Reference.pas';
 
 end.

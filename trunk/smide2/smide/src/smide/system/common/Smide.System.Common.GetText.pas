@@ -21,7 +21,7 @@ begin
   // TODO: format
   for i := 0 to High(Args) do
   begin
-    Result := Result + #10#13;
+    Result := Result + ' ';
     case TVarRec(Args[i]).VType of
       vtInteger: ; //(VInteger: Integer; VType: Byte);
       vtBoolean: ; //(VBoolean: Boolean);
@@ -34,11 +34,11 @@ begin
       vtClass: ; //(VClass: TClass);
       vtWideChar: Result := Result + TVarRec(Args[i]).VWideChar; // (VWideChar: WideChar);
       vtPWideChar: Result := Result + TVarRec(Args[i]).VPWideChar; //(VPWideChar: PWideChar);
-      vtAnsiString: Result := Result + PAnsiString(TVarRec(Args[i]).VAnsiString)^; //(VAnsiString: Pointer);
+      vtAnsiString: Result := Result + AnsiString(TVarRec(Args[i]).VAnsiString); //(VAnsiString: Pointer);
       vtCurrency: ; //(VCurrency: PCurrency);
       vtVariant: ; //(VVariant: PVariant);
       vtInterface: ; //(VInterface: Pointer);
-      vtWideString: Result := Result + PWideString(TVarRec(Args[i]).VWideString)^; //(VWideString: Pointer);
+      vtWideString: Result := Result + WideString(TVarRec(Args[i]).VWideString); //(VWideString: Pointer);
       vtInt64: ; //(VInt64: PInt64);
     end;
   end;

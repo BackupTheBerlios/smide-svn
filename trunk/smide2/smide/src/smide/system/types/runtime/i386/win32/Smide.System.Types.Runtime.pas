@@ -26,114 +26,114 @@ type
   end;
 
   TRuntimeOrdinalType = class(TOrdinalType)
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeRangeOrdinalType = class(TRangeOrdinalType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeIntegerType = class(TIntegerType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeCardinalType = class(TCardinalType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeShortIntType = class(TShortIntType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeSmallIntType = class(TSmallIntType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeLongIntType = class(TLongIntType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeByteType = class(TByteType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeWordType = class(TWordType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeLongWordType = class(TLongWordType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeCharType = class(TCharType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeEnumerationType = class(TEnumerationType)
   public
     function IsBoolean: Boolean;
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
-    function GetBaseType: TType; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
+    function get_BaseType: TType; override;
   private
     FFieldCollector: TFieldCollector;
-    function GetFieldCollector: TFieldCollector;
+    function get_FieldCollector: TFieldCollector;
   protected
-    property FieldCollector: TFieldCollector read GetFieldCollector;
+    property FieldCollector: TFieldCollector read get_FieldCollector;
   public
     function GetField(Name: WideString; BindingAttr: TBindingFlags): TFieldInfo; override;
     function GetFields(BindingAttr: TBindingFlags): IFieldInfoCollection; override;
@@ -143,16 +143,18 @@ type
 
   TRuntimeSetType = class(TSetType)
   protected
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_OrdinalKind: TOrdinalKind; override;
+  public
+    function GetElementType: TType; override;  
   end;
 
   TRuntimeWideCharType = class(TWideCharType)
   protected
-    function GetMinValue: Integer; override;
-    function GetMaxValue: Integer; override;
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
-    function GetOrdinalKind: TOrdinalKind; override;
+    function get_MinValue: Integer; override;
+    function get_MaxValue: Integer; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
+    function get_OrdinalKind: TOrdinalKind; override;
   end;
 
   TRuntimeFloatType = class(TFloatType)
@@ -178,7 +180,7 @@ type
 
   TRuntimeShortStringType = class(TShortStringType)
   protected
-    function GetMaxLength: Byte; override;
+    function get_MaxLength: Byte; override;
   end;
 
   TRuntimeWideStringType = class(TWideStringType)
@@ -186,9 +188,9 @@ type
 
   TRuntimeClassType = class(TClassType)
   protected // Name and Namespace overrides
-    function GetNamespace: WideString; override;
+    function get_Namespace: WideString; override;
   protected // Attributes
-    function GetAttributes: TTypeAttributes; override;
+    function get_Attributes: TTypeAttributes; override;
   private
     FMethodCollector: TMethodCollector;
     function GetMethodCollector: TMethodCollector;
@@ -200,7 +202,7 @@ type
     function GetMethod(Name: WideString; BindingAttr: TBindingFlags): TMethodInfo; override;
     function GetMethods(BindingAttr: TBindingFlags): IMethodInfoCollection; override;
   protected
-    function GetBaseType: TType; override;
+    function get_BaseType: TType; override;
   public
     destructor Destroy; override;
   end;
@@ -210,13 +212,13 @@ type
 
   TRuntimeInterfaceType = class(TInterfaceType)
   protected // Name and Namespace overrides
-    function GetNamespace: WideString; override;
+    function get_Namespace: WideString; override;
   end;
 
   TRuntimeInt64Type = class(TInt64Type)
   protected
-    function GetMinInt64Value: Int64; override;
-    function GetMaxInt64Value: Int64; override;
+    function get_MinInt64Value: Int64; override;
+    function get_MaxInt64Value: Int64; override;
   end;
 
   TRuntimeArrayType = class(TArrayType)
@@ -276,8 +278,6 @@ begin
         fkExtended: Result := TRuntimeExtendedType.Create(TypeHandle, TypeInfoData);
         fkComp: Result := TRuntimeCompType.Create(TypeHandle, TypeInfoData);
         fkCurrency: Result := TRuntimeCurrencyType.Create(TypeHandle, TypeInfoData);
-      else
-        Result := TRuntimeFloatType.Create(TypeHandle, TypeInfoData);
       end;
 
     tkString: Result := TRuntimeShortStringType.Create(TypeHandle, TypeInfoData);
@@ -296,7 +296,7 @@ begin
   end;
 
   if Result = nil then
-    raise EUnknownType.Create;
+    raise EUnknownType.Create(TypeHandle.Name);
 end;
 
 class function TRuntimeType.GetRuntimeOrdinalType(TypeHandle: TRuntimeTypeHandle): TType;
@@ -354,270 +354,270 @@ end;
 
 { TRuntimeRangeOrdinalType }
 
-function TRuntimeRangeOrdinalType.GetMaxInt64Value: Int64;
+function TRuntimeRangeOrdinalType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeRangeOrdinalType.GetMaxValue: Integer;
+function TRuntimeRangeOrdinalType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeRangeOrdinalType.GetMinInt64Value: Int64;
+function TRuntimeRangeOrdinalType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeRangeOrdinalType.GetMinValue: Integer;
+function TRuntimeRangeOrdinalType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeRangeOrdinalType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeRangeOrdinalType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeIntegerType }
 
-function TRuntimeIntegerType.GetMaxInt64Value: Int64;
+function TRuntimeIntegerType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeIntegerType.GetMaxValue: Integer;
+function TRuntimeIntegerType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeIntegerType.GetMinInt64Value: Int64;
+function TRuntimeIntegerType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeIntegerType.GetMinValue: Integer;
+function TRuntimeIntegerType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeIntegerType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeIntegerType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeCardinalType }
 
-function TRuntimeCardinalType.GetMaxInt64Value: Int64;
+function TRuntimeCardinalType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeCardinalType.GetMaxValue: Integer;
+function TRuntimeCardinalType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeCardinalType.GetMinInt64Value: Int64;
+function TRuntimeCardinalType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeCardinalType.GetMinValue: Integer;
+function TRuntimeCardinalType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeCardinalType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeCardinalType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeShortIntType }
 
-function TRuntimeShortIntType.GetMaxInt64Value: Int64;
+function TRuntimeShortIntType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeShortIntType.GetMaxValue: Integer;
+function TRuntimeShortIntType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeShortIntType.GetMinInt64Value: Int64;
+function TRuntimeShortIntType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeShortIntType.GetMinValue: Integer;
+function TRuntimeShortIntType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeShortIntType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeShortIntType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeSmallIntType }
 
-function TRuntimeSmallIntType.GetMaxInt64Value: Int64;
+function TRuntimeSmallIntType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeSmallIntType.GetMaxValue: Integer;
+function TRuntimeSmallIntType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeSmallIntType.GetMinInt64Value: Int64;
+function TRuntimeSmallIntType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeSmallIntType.GetMinValue: Integer;
+function TRuntimeSmallIntType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeSmallIntType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeSmallIntType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeLongIntType }
 
-function TRuntimeLongIntType.GetMaxInt64Value: Int64;
+function TRuntimeLongIntType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeLongIntType.GetMaxValue: Integer;
+function TRuntimeLongIntType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeLongIntType.GetMinInt64Value: Int64;
+function TRuntimeLongIntType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeLongIntType.GetMinValue: Integer;
+function TRuntimeLongIntType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeLongIntType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeLongIntType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeByteType }
 
-function TRuntimeByteType.GetMaxInt64Value: Int64;
+function TRuntimeByteType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeByteType.GetMaxValue: Integer;
+function TRuntimeByteType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeByteType.GetMinInt64Value: Int64;
+function TRuntimeByteType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeByteType.GetMinValue: Integer;
+function TRuntimeByteType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeByteType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeByteType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeWordType }
 
-function TRuntimeWordType.GetMaxInt64Value: Int64;
+function TRuntimeWordType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeWordType.GetMaxValue: Integer;
+function TRuntimeWordType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeWordType.GetMinInt64Value: Int64;
+function TRuntimeWordType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeWordType.GetMinValue: Integer;
+function TRuntimeWordType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeWordType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeWordType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeLongWordType }
 
-function TRuntimeLongWordType.GetMaxInt64Value: Int64;
+function TRuntimeLongWordType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeLongWordType.GetMaxValue: Integer;
+function TRuntimeLongWordType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeLongWordType.GetMinInt64Value: Int64;
+function TRuntimeLongWordType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeLongWordType.GetMinValue: Integer;
+function TRuntimeLongWordType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeLongWordType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeLongWordType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeCharType }
 
-function TRuntimeCharType.GetMaxInt64Value: Int64;
+function TRuntimeCharType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeCharType.GetMaxValue: Integer;
+function TRuntimeCharType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeCharType.GetMinInt64Value: Int64;
+function TRuntimeCharType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeCharType.GetMinValue: Integer;
+function TRuntimeCharType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeCharType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeCharType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
@@ -630,7 +630,7 @@ begin
   inherited;
 end;
 
-function TRuntimeEnumerationType.GetBaseType: TType;
+function TRuntimeEnumerationType.get_BaseType: TType;
 begin
   if (RuntimeTypeInfoData^.BaseType <> nil) and (RuntimeTypeInfoData^.BaseType^ <> RuntimeTypeHandle) then
     Result := TType.GetType(RuntimeTypeInfoData^.BaseType^)
@@ -643,7 +643,7 @@ begin
   Result := FieldCollector.GetField(Name, BindingAttr);
 end;
 
-function TRuntimeEnumerationType.GetFieldCollector: TFieldCollector;
+function TRuntimeEnumerationType.get_FieldCollector: TFieldCollector;
 begin
   if not Assigned(FFieldCollector) then
     FFieldCollector := TEnumerationTypeFieldCollector.Create(Self);
@@ -655,12 +655,12 @@ begin
   Result := FieldCollector.GetFields(BindingAttr);
 end;
 
-function TRuntimeEnumerationType.GetMaxInt64Value: Int64;
+function TRuntimeEnumerationType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeEnumerationType.GetMaxValue: Integer;
+function TRuntimeEnumerationType.get_MaxValue: Integer;
 begin
   if IsBoolean then
     Result := 0
@@ -668,12 +668,12 @@ begin
     Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeEnumerationType.GetMinInt64Value: Int64;
+function TRuntimeEnumerationType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeEnumerationType.GetMinValue: Integer;
+function TRuntimeEnumerationType.get_MinValue: Integer;
 begin
   if IsBoolean then
     Result := -1
@@ -681,7 +681,7 @@ begin
     Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeEnumerationType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeEnumerationType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
@@ -693,34 +693,34 @@ end;
 
 { TRuntimeWideCharType }
 
-function TRuntimeWideCharType.GetMaxInt64Value: Int64;
+function TRuntimeWideCharType.get_MaxInt64Value: Int64;
 begin
   Result := MaxValue;
 end;
 
-function TRuntimeWideCharType.GetMaxValue: Integer;
+function TRuntimeWideCharType.get_MaxValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MaxValue;
 end;
 
-function TRuntimeWideCharType.GetMinInt64Value: Int64;
+function TRuntimeWideCharType.get_MinInt64Value: Int64;
 begin
   Result := MinValue;
 end;
 
-function TRuntimeWideCharType.GetMinValue: Integer;
+function TRuntimeWideCharType.get_MinValue: Integer;
 begin
   Result := RuntimeTypeInfoData^.MinValue;
 end;
 
-function TRuntimeWideCharType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeWideCharType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeClassType }
 
-function TRuntimeClassType.GetAttributes: TTypeAttributes;
+function TRuntimeClassType.get_Attributes: TTypeAttributes;
 begin
   Result := [taPublic];
 end;
@@ -731,7 +731,7 @@ begin
   Result := MethodCollector.GetMethod(Name, BindingAttr, Binder, Types, Modifiers);
 end;
 
-function TRuntimeClassType.GetBaseType: TType;
+function TRuntimeClassType.get_BaseType: TType;
 begin
   Result := TType.GetType(RuntimeTypeInfoData^.ParentInfo^);
 end;
@@ -747,7 +747,7 @@ begin
   Result := MethodCollector.GetMethods(BindingAttr);
 end;
 
-function TRuntimeClassType.GetNamespace: WideString;
+function TRuntimeClassType.get_Namespace: WideString;
 begin
   Result := RuntimeTypeInfoData^.UnitName;
 end;
@@ -767,40 +767,45 @@ end;
 
 { TRuntimeInterfaceType }
 
-function TRuntimeInterfaceType.GetNamespace: WideString;
+function TRuntimeInterfaceType.get_Namespace: WideString;
 begin
   Result := RuntimeTypeInfoData^.InterfaceUnit;
 end;
 
 { TRuntimeInt64Type }
 
-function TRuntimeInt64Type.GetMaxInt64Value: Int64;
+function TRuntimeInt64Type.get_MaxInt64Value: Int64;
 begin
   Result := RuntimeTypeInfoData^.MaxInt64Value;
 end;
 
-function TRuntimeInt64Type.GetMinInt64Value: Int64;
+function TRuntimeInt64Type.get_MinInt64Value: Int64;
 begin
   Result := RuntimeTypeInfoData^.MinInt64Value;
 end;
 
 { TRuntimeShortStringType }
 
-function TRuntimeShortStringType.GetMaxLength: Byte;
+function TRuntimeShortStringType.get_MaxLength: Byte;
 begin
   Result := RuntimeTypeInfoData^.MaxLength;
 end;
 
 { TRuntimeOrdinalType }
 
-function TRuntimeOrdinalType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeOrdinalType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;
 
 { TRuntimeSetType }
 
-function TRuntimeSetType.GetOrdinalKind: TOrdinalKind;
+function TRuntimeSetType.GetElementType: TType;
+begin
+  result := TType.GetType(RuntimeTypeInfoData^.CompType^);
+end;
+
+function TRuntimeSetType.get_OrdinalKind: TOrdinalKind;
 begin
   Result := RuntimeTypeInfoData^.OrdinalKind;
 end;

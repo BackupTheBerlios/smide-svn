@@ -4,6 +4,7 @@ interface
 
 uses
   Smide.System.Runtime,
+  Smide.System.Runtime.Reference,
   Smide.System.Runtime.Environment,
   Smide.System.Common,
   Smide.System.Common.Number,
@@ -29,7 +30,7 @@ type
   TStaticBase = Smide.System.Common.TStaticBase;
 
   // Reference support
-  TReference = Smide.System.Common.TReference;
+  TReference = Smide.System.Runtime.Reference.TReference;
 
   // RuntimeHandles
   TRuntimeFieldHandle = Smide.System.Reflection.Runtime.Handles.TRuntimeFieldHandle;

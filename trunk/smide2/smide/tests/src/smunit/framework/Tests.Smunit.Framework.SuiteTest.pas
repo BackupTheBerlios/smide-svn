@@ -60,12 +60,14 @@ type
     procedure TestOneTestCase;
     procedure TestShadowedTests;
     procedure TestAddTestSuite;
+    procedure TestAddNilTestSuite;
   end;
   {$WARNINGS ON}
 
 implementation
 
 uses
+  Smide.System,
   Tests.Smunit.Framework.InheritedTestCase,
   Tests.Smunit.Framework.NoTestCases,
   Tests.Smunit.Framework.NoTestCaseClass,
@@ -105,6 +107,23 @@ end;
 procedure TSuiteTest.TearDown;
 begin
   FResult.Free;
+end;
+
+procedure TSuiteTest.TestAddNilTestSuite;
+var
+  Suite: TTestSuite;
+  Test: ITest;
+begin
+  Suite := TTestSuite.Create;
+  Test := Suite;
+  try
+    Suite.AddTestSuite(nil);
+  except
+    on e: EArgumentNil do
+      ;
+  else
+    raise;
+  end;
 end;
 
 procedure TSuiteTest.TestAddTestSuite;
