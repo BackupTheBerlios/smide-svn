@@ -1,0 +1,57 @@
+package SmideSystem;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS OFF}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'Smide System I386'}
+{$LIBSUFFIX 'I386W32d'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+contains
+  Smide.System.Common in '..\..\..\system\common\Smide.System.Common.pas',
+  Smide.System.Common.GetText in '..\..\..\system\common\Smide.System.Common.GetText.pas',
+  Smide.System.Common.Number in '..\..\..\system\common\Smide.System.Common.Number.pas',
+  Smide.System.Runtime in '..\..\..\system\runtime\i386\win32\Smide.System.Runtime.pas',
+  Smide.System.Types.Common in '..\..\..\system\types\common\Smide.System.Types.Common.pas',
+  Smide.System.Types.Runtime.TypeInfo in '..\..\..\system\types\runtime\i386\win32\Smide.System.Types.Runtime.TypeInfo.pas',
+  Smide.System.Types.Runtime.TypeData in '..\..\..\system\types\runtime\i386\win32\Smide.System.Types.Runtime.TypeData.pas',
+  Smide.System.Types.Runtime.Cache in '..\..\..\system\types\runtime\i386\win32\Smide.System.Types.Runtime.Cache.pas',
+  Smide.System.Types.Runtime.TypeHandlers in '..\..\..\system\types\runtime\i386\win32\Smide.System.Types.Runtime.TypeHandlers.pas',
+  Smide.System.Types.Runtime.Collectors in '..\..\..\system\types\runtime\i386\win32\Smide.System.Types.Runtime.Collectors.pas',
+  Smide.System.Types.Runtime.ClassTypeCollectors in '..\..\..\system\types\runtime\i386\win32\Smide.System.Types.Runtime.ClassTypeCollectors.pas',
+  Smide.System.Types.Runtime.EnumerationTypeCollectors in '..\..\..\system\types\runtime\i386\win32\Smide.System.Types.Runtime.EnumerationTypeCollectors.pas',
+  Smide.System.Types.Runtime in '..\..\..\system\types\runtime\i386\win32\Smide.System.Types.Runtime.pas',
+  Smide.System.Reflection.Runtime.Handles in '..\..\..\system\reflection\runtime\i386\win32\Smide.System.Reflection.Runtime.Handles.pas',
+  Smide.System.Reflection.Runtime in '..\..\..\system\reflection\runtime\i386\win32\Smide.System.Reflection.Runtime.pas',
+  Smide.System.Reflection in '..\..\..\system\reflection\Smide.System.Reflection.pas',
+  Smide.System.Types in '..\..\..\system\types\Smide.System.Types.pas',
+  Smide.System.Collections.Common in '..\..\..\system\collections\common\Smide.System.Collections.Common.pas',
+  Smide.System.Collections.Runtime in '..\..\..\system\collections\runtime\i386\win32\Smide.System.Collections.Runtime.pas',
+  Smide.System.Collections in '..\..\..\system\collections\Smide.System.Collections.pas',
+  Smide.System.Collections.Specialized in '..\..\..\system\collections\specialized\Smide.System.Collections.Specialized.pas',
+  Smide.System.Runtime.Environment in '..\..\..\system\runtime\i386\win32\Smide.System.Runtime.Environment.pas',
+  Smide.System.Globalization in '..\..\..\system\globalization\Smide.System.Globalization.pas',
+  Smide.System in '..\..\..\system\Smide.System.pas',
+  Types;
+
+end.

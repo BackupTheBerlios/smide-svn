@@ -1,0 +1,3 @@
+{$IFOPT D+}
+{$DEFINE DEBUG=1}
+{$ENDIF}

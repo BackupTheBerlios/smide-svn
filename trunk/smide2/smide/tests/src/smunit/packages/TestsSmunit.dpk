@@ -1,0 +1,51 @@
+package TestsSmunit;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS OFF}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'Smunit tests package'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  Smunit;
+
+contains
+  Tests.Smunit.Framework.TestListenerTest in '..\framework\Tests.Smunit.Framework.TestListenerTest.pas',
+  Tests.Smunit.Framework.AssertTest in '..\framework\Tests.Smunit.Framework.AssertTest.pas',
+  Tests.Smunit.Framework.DoublePrecisionAssertTest in '..\framework\Tests.Smunit.Framework.DoublePrecisionAssertTest.pas',
+  Tests.Smunit.Framework.InheritedTestCase in '..\framework\Tests.Smunit.Framework.InheritedTestCase.pas',
+  Tests.Smunit.Framework.NoArgTestCaseTest in '..\framework\Tests.Smunit.Framework.NoArgTestCaseTest.pas',
+  Tests.Smunit.Framework.NoTestCaseClass in '..\framework\Tests.Smunit.Framework.NoTestCaseClass.pas',
+  Tests.Smunit.Framework.NoTestCases in '..\framework\Tests.Smunit.Framework.NoTestCases.pas',
+  Tests.Smunit.Framework.NotPublicTestCase in '..\framework\Tests.Smunit.Framework.NotPublicTestCase.pas',
+  Tests.Smunit.Framework.NotVoidTestCase in '..\framework\Tests.Smunit.Framework.NotVoidTestCase.pas',
+  Tests.Smunit.Framework.OneTestCase in '..\framework\Tests.Smunit.Framework.OneTestCase.pas',
+  Tests.Smunit.Framework.OverrideTestCase in '..\framework\Tests.Smunit.Framework.OverrideTestCase.pas',
+  Tests.Smunit.Framework.Success in '..\framework\Tests.Smunit.Framework.Success.pas',
+  Tests.Smunit.Framework.SuiteTest in '..\framework\Tests.Smunit.Framework.SuiteTest.pas',
+  Tests.Smunit.Framework.TestCaseTest in '..\framework\Tests.Smunit.Framework.TestCaseTest.pas',
+  Tests.Smunit.Framework.TestImplementorTest in '..\framework\Tests.Smunit.Framework.TestImplementorTest.pas',
+  Tests.Smunit.Framework.AllTests in '..\framework\Tests.Smunit.Framework.AllTests.pas',
+  Tests.Smunit.WasRun in '..\Tests.Smunit.WasRun.pas';
+
+end.

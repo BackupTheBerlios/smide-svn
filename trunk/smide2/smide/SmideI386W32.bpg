@@ -9,15 +9,25 @@ MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
 DCC = $(ROOT)\bin\dcc32.exe $**
 BRCC = $(ROOT)\bin\brcc32.exe $**
 #------------------------------------------------------------------------------
-PROJECTS = SmideSystem.bpl SmideSystemRuntime.bpl
+PROJECTS = SmideSystemI386d.bpl Smunit01a.bpl Project1.exe TestsSmunit.bpl \
+  TestsSmunitRunner.exe
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
 
-SmideSystem.bpl: src\smide\packages\i386\SmideSystem.dpk
+Project1.exe: tests\src\compile\Project1.dpr
   $(DCC)
 
-SmideSystemRuntime.bpl: src\smide\packages\i386\win32\SmideSystemRuntime.dpk
+SmideSystemI386d.bpl: src\smide\packages\i386\win32\SmideSystem.dpk
+  $(DCC)
+
+Smunit01a.bpl: src\smunit\packages\Smunit.dpk
+  $(DCC)
+
+TestsSmunit.bpl: tests\src\smunit\packages\TestsSmunit.dpk
+  $(DCC)
+
+TestsSmunitRunner.exe: tests\src\smunit\TestsSmunitRunner.dpr
   $(DCC)
 
 
