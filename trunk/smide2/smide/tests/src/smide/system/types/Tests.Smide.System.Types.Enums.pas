@@ -145,6 +145,10 @@ begin
   AssertEquals('TE1', FEnumType1.GetField('TE1', [bfPublic, bfStatic, bfDeclaredOnly]).Name);
 
   AssertNil(FEnumType1.GetField('TE1', [bfNonPublic]));
+
+  // case sensitivity
+  AssertNotNil(FEnumType1.GetField('te1', [bfPublic, bfStatic, bfIgnoreCase]));
+  AssertNil(FEnumType1.GetField('te1', [bfPublic, bfStatic]));
 end;
 
 procedure TEnumsTest.TestEnum2GetField;
@@ -160,6 +164,10 @@ begin
   AssertNil(FEnumType2.GetField('TE1', [bfPublic, bfStatic, bfDeclaredOnly]));
 
   AssertNil(FEnumType2.GetField('TE1', [bfNonPublic]));
+
+  // case sensitivity
+  AssertNotNil(FEnumType2.GetField('te1', [bfPublic, bfStatic, bfIgnoreCase]));
+  AssertNil(FEnumType2.GetField('te1', [bfPublic, bfStatic]));
 end;
 
 end.

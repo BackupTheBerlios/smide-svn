@@ -34,6 +34,8 @@ contains
   Tests.Smide.System.AllTests in 'system\Tests.Smide.System.AllTests.pas',
   Tests.Smide.System.Types.Classes in 'system\types\Tests.Smide.System.Types.Classes.pas',
   Tests.Smide.System.Types.Types in 'system\types\Tests.Smide.System.Types.Types.pas',
-  Tests.Smide.System.Strings in 'system\Tests.Smide.System.Strings.pas';
+  Tests.Smide.System.Strings in 'system\Tests.Smide.System.Strings.pas',
+  Tests.Smide.System.Globalization.AllTests in 'system\globalization\Tests.Smide.System.Globalization.AllTests.pas',
+  Tests.Smide.System.Globalization.CompareInfo in 'system\globalization\Tests.Smide.System.Globalization.CompareInfo.pas';
 
 end.

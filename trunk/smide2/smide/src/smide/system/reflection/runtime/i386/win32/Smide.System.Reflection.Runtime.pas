@@ -4,7 +4,8 @@ interface
 
 uses
   Smide.System,
-  Smide.System.Reflection;
+  Smide.System.Reflection,
+  Smide.System.Globalization;
 
 type
   TRuntimeMethodInfo = class(TMethodInfo)
@@ -29,7 +30,7 @@ type
     function get_MethodHandle: TRuntimeMethodHandle; override;
   protected
     procedure InvokeImpl(const Obj; InvokeAttr: TBindingFlags; Binder: TBinder;
-      Parameters: array of const; {culture: CultureInfo;} out Result); override;
+      Parameters: array of const; Culture: TCultureInfo; out Result); override;
 
   public
     constructor Create(MethodHandle: TRuntimeMethodHandle; Name: WideString; ReflectedType, DeclaringType: TType;
@@ -59,7 +60,7 @@ type
     constructor Create(FieldHandle: TRuntimeFieldHandle; Name: WideString;
       ReflectedType, DeclaringType: TType; Attributes: TFieldAttributes; FieldType: TType);
 
-    function ToString: widestring; override;
+    function ToString: WideString; override;
   end;
 
   TRuntimeInheritedFieldInfo = class(TFieldInfo)
@@ -79,7 +80,7 @@ type
   public
     constructor Create(FieldInfo: TFieldInfo; ReflectedType: TType);
 
-    function ToString: widestring; override;
+    function ToString: WideString; override;
   end;
 
   TRuntimeEnumerationFieldInfo = class(TRuntimeFieldInfo)
@@ -179,7 +180,7 @@ begin
 end;
 
 procedure TRuntimeMethodInfo.InvokeImpl(const Obj; InvokeAttr: TBindingFlags;
-  Binder: TBinder; Parameters: array of const; out Result);
+  Binder: TBinder; Parameters: array of const; Culture: TCultureInfo; out Result);
 type
   TVoidMethod = procedure of object;
 var
@@ -238,9 +239,9 @@ begin
   Result := FReflectedType;
 end;
 
-function TRuntimeFieldInfo.ToString: widestring;
+function TRuntimeFieldInfo.ToString: WideString;
 begin
-  result := Name + ': ' + FieldType.ToString;
+  Result := Name + ': ' + FieldType.ToString;
 end;
 
 { TRuntimeInheritedFieldInfo }
@@ -292,9 +293,9 @@ begin
   FFieldInfo.GetValue(Obj, Result);
 end;
 
-function TRuntimeInheritedFieldInfo.ToString: widestring;
+function TRuntimeInheritedFieldInfo.ToString: WideString;
 begin
-  result := FFieldInfo.ToString;
+  Result := FFieldInfo.ToString;
 end;
 
 { TRuntimeEnumerationFieldInfo }
@@ -334,13 +335,13 @@ end;
 
 procedure TRuntimeClassFieldInfo.GetValue(const Obj; out Result);
 begin
-  if (pointer(Obj)=nil) and not IsStatic then
+  if (Pointer(Obj) = nil) and not IsStatic then
     raise ETarget.Create(_('Non-static field requires a target'));
 
   if not TType.GetType(TObject(Obj)).IsSubclassOf(ReflectedType) then
     raise EArgument.Create(_('Object type cannot be converted to target type.'));
 
-  FieldType.DataToValue(TDataType(PPointer(integer(Obj) + PField(FieldHandle)^.Offset)^), Result);
+  FieldType.DataToValue(TDataType(PPointer(Integer(Obj) + PField(FieldHandle)^.Offset)^), Result);
 end;
 
 end.

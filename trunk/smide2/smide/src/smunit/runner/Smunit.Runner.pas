@@ -69,7 +69,7 @@ type
     function CollectTests: IStringCollection;
   end;
 
-  TBaseTestRunner = class(TSmideObject, ITestListener)
+  TTestRunnerBase = class(TSmideObject, ITestListener)
   private
     //class function GetPreferencesFile: widestring;
     //class procedure ReadPreferences: widestring;
@@ -127,26 +127,26 @@ uses
   Smide.System.Types,
   Smide.System.Reflection;
 
-{ TBaseTestRunner }
+{ TTestRunnerBase }
 
-procedure TBaseTestRunner.AddError(Test: ITest; e: Exception);
+procedure TTestRunnerBase.AddError(Test: ITest; e: Exception);
 begin
   // TODO: with Lock do
   TestFailed(trsError, Test, e);
 end;
 
-procedure TBaseTestRunner.AddFailure(Test: ITest; e: EAssertionFailedException);
+procedure TTestRunnerBase.AddFailure(Test: ITest; e: EAssertionFailedException);
 begin
   // TODO: with Lock do
   TestFailed(trsFailure, Test, e);
 end;
 
-procedure TBaseTestRunner.ClearStatus;
+procedure TTestRunnerBase.ClearStatus;
 begin
 
 end;
 
-class function TBaseTestRunner.ElapsedTimeAsString(Runtime: Integer): WideString;
+class function TTestRunnerBase.ElapsedTimeAsString(Runtime: Integer): WideString;
 var
   d: Double;
 begin
@@ -154,13 +154,13 @@ begin
   Result := TType.GetType(TypeInfo(Double)).ValueToString(d);
 end;
 
-procedure TBaseTestRunner.EndTest(Test: ITest);
+procedure TTestRunnerBase.EndTest(Test: ITest);
 begin
   // TODO: with Lock do
   TestEnded(TType.GetTypeHandler(TypeInfo(ITest)).ValueToString(Test));
 end;
 
-class function TBaseTestRunner.FilterLine(Line: WideString): Boolean;
+class function TTestRunnerBase.FilterLine(Line: WideString): Boolean;
 const
   patterns: array[0..6] of WideString = (
     'Smunit.Framework.TTestCase',
@@ -184,7 +184,7 @@ begin
   Result := false;
 end;
 
-class function TBaseTestRunner.GetFilteredTrace(Stack: WideString): WideString;
+class function TTestRunnerBase.GetFilteredTrace(Stack: WideString): WideString;
 // TODO: Filter with StringReader & StringWriter
 {var
   sr: IStringCollection;
@@ -204,12 +204,12 @@ begin
   Result := Stack;
 end;
 
-function TBaseTestRunner.GetLoader: ITestSuiteLoader;
+function TTestRunnerBase.GetLoader: ITestSuiteLoader;
 begin
   Result := TStandardTestSuiteLoader.Create;
 end;
 
-function TBaseTestRunner.GetTest(SuiteClassName: WideString): ITest;
+function TTestRunnerBase.GetTest(SuiteClassName: WideString): ITest;
 var
   TestClass: TType;
   SuiteMethod: TMethodInfo;
@@ -276,12 +276,12 @@ begin
   Result := Test;
 end;
 
-function TBaseTestRunner.LoadSuiteClass(SuiteClassName: WideString): TType;
+function TTestRunnerBase.LoadSuiteClass(SuiteClassName: WideString): TType;
 begin
   Result := GetLoader.Load(SuiteClassName);
 end;
 
-procedure TBaseTestRunner.StartTest(Test: ITest);
+procedure TTestRunnerBase.StartTest(Test: ITest);
 begin
   // TODO: with Lock do
   TestStarted(TType.GetTypeHandler(TypeInfo(ITest)).ValueToString(Test));

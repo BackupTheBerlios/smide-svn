@@ -15,6 +15,7 @@ type
     constructor Create; override;
     constructor Create(ErrorCode: Integer); overload;
     constructor Create(ErrorCode: Integer; Message: WideString); overload;
+    constructor Create(ErrorCode: Integer; Message: WideString; InnerException: Exception); overload;
 
     property ErrorCode: Integer read FErrorCode;
   end;
@@ -47,6 +48,12 @@ begin
   Create;
 end;
 
+constructor EOsError.Create(ErrorCode: Integer; Message: WideString; InnerException: Exception);
+begin
+  FErrorCode := ErrorCode;
+  inherited Create(Message, InnerException);
+end;
+
 function EOsError.get_Message: WideString;
 var
   Buffer: array[0..500] of WideChar;
@@ -62,11 +69,10 @@ begin
     while (Len > 0) and (Buffer[Len - 1] in [WideChar(#0)..WideChar(#32)]) do
       Dec(Len);
     SetString(ErrorMessage, Buffer, Len);
-    Result := Result + TEnvironment.NewLine + 'Message: ' + ErrorMessage;
-
+    Result := Result + TEnvironment.NewLine + _('Message: ') + ErrorMessage;
   end;
 
-  Result := Result + TEnvironment.NewLine + 'ErrorCode: ' + TType.GetType(TypeInfo(Integer)).ValueToString(ErrorCode);
+  Result := Result + TEnvironment.NewLine + _('ErrorCode: ') + TType.GetType(TypeInfo(Integer)).ValueToString(ErrorCode);
 end;
 
 end.

@@ -72,7 +72,7 @@ type
     procedure PrintWaitPromp; virtual;
   end;
 
-  TTestRunner = class(TBaseTestRunner)
+  TTestRunner = class(TTestRunnerBase)
   private
     FPrinter: TResultPrinter;
   protected
@@ -122,7 +122,7 @@ end;
 
 function TResultPrinter.ElapsedTimeAsString(Runtime: Integer): WideString;
 begin
-  Result := TBaseTestRunner.ElapsedTimeAsString(Runtime);
+  Result := TTestRunnerBase.ElapsedTimeAsString(Runtime);
 end;
 
 procedure TResultPrinter.EndTest(Test: ITest);
@@ -165,7 +165,7 @@ end;
 
 procedure TResultPrinter.PrintDefectTrace(booboo: TTestFailure);
 begin
-  Write(TBaseTestRunner.GetFilteredTrace(booboo.Trace));
+  Write(TTestRunnerBase.GetFilteredTrace(booboo.Trace));
 end;
 
 procedure TResultPrinter.PrintErrors(Result: TTestResult);
@@ -191,7 +191,6 @@ begin
   end
   else
   begin
-    Writeln;
     Writeln('FAILURES!!!');
     Writeln('Tests Run: ', Result.RunCount(),
       ', Failures: ', Result.Failures.Count,

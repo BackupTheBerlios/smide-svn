@@ -512,11 +512,7 @@ end;
 
 function TStringType.CompareValues(const Value1, Value2): Integer;
 begin
-  // TODO: String.Compare
-  if string(Value1) = string(Value2) then
-    Result := 0
-  else
-    Result := 1;
+  result := TString.Compare(string(Value1), string(Value2))
 end;
 
 procedure TStringType.Copy(const Source, Dest: TTypeData);
@@ -563,11 +559,7 @@ end;
 
 function TShortStringType.CompareValues(const Value1, Value2): Integer;
 begin
-  // TODO: String.Compare
-  if ShortString(Value1) = ShortString(Value2) then
-    Result := 0
-  else
-    Result := 1;
+  result := TString.Compare(ShortString(Value1), ShortString(Value2))
 end;
 
 procedure TShortStringType.Copy(const Source, Dest: TTypeData);
@@ -614,11 +606,7 @@ end;
 
 function TWideStringType.CompareValues(const Value1, Value2): Integer;
 begin
-  // TODO: String.Compare
-  if WideString(Value1) = WideString(Value2) then
-    Result := 0
-  else
-    Result := 1;
+  Result := TString.Compare(Widestring(Value1), WideString(Value2));
 end;
 
 procedure TWideStringType.Copy(const Source, Dest: TTypeData);

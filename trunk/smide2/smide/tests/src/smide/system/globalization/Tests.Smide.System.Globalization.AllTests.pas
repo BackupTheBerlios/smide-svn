@@ -1,4 +1,4 @@
-unit Tests.Smide.System.AllTests;
+unit Tests.Smide.System.Globalization.AllTests;
 
 interface
 
@@ -12,17 +12,15 @@ type
   {$WARNINGS OFF}
   TAllTests = class
   public
-    class procedure Main;
     class function Suite: ITest;
+    class procedure Main;
   end;
   {$WARNINGS ON}
 
 implementation
 
 uses
-  Tests.Smide.System.Strings,
-  Tests.Smide.System.Types.AllTests,
-  Tests.Smide.System.Globalization.AllTests;
+  Tests.Smide.System.Globalization.CompareInfo;
 
 { TAllTests }
 
@@ -35,15 +33,11 @@ class function TAllTests.Suite: ITest;
 var
   Suite: TTestSuite;
 begin
-  Suite := TTestSuite.Create('Smide Tests');
+  Suite := TTestSuite.Create('Smide Globalization Tests');
 
-  Suite.AddTestSuite(Tests.Smide.System.Strings.TStringsTest);
-
-  Suite.AddTest(Tests.Smide.System.Types.AllTests.TAllTests.Suite);
-  Suite.AddTest(Tests.Smide.System.Globalization.AllTests.TAllTests.Suite);
+  Suite.AddTestSuite(Tests.Smide.System.Globalization.CompareInfo.TCompareInfoTest);
 
   Result := Suite;
 end;
 
 end.
-

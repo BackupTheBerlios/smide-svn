@@ -35,6 +35,9 @@ type
 
     function Compare(s1, s2: WideString): Integer; overload;
     function Compare(s1, s2: WideString; Options: TCompareOptions): Integer; overload; virtual; abstract;
+
+    function CompareOrdinal(s1, s2: WideString): Integer; overload;
+    function CompareOrdinal(s1: WideString; l1: Integer; s2: WideString; l2: Integer): Integer; overload; virtual; abstract;
   end;
 
   TCultureInfo = class(TSmideObject)
@@ -86,6 +89,11 @@ end;
 function TCompareInfo.Compare(s1, s2: WideString): Integer;
 begin
   Result := Compare(s1, s2, []);
+end;
+
+function TCompareInfo.CompareOrdinal(s1, s2: WideString): Integer;
+begin
+  Result := CompareOrdinal(s1, Length(s1), s2, Length(s2));
 end;
 
 class function TCompareInfo.GetCompareInfo(Culture: Integer): TCompareInfo;

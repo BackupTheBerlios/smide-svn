@@ -81,9 +81,11 @@ begin
       exit;
 
   if bfIgnoreCase in BindingAttr then
-    raise ENotImplemented.Create('TFieldCollector.MatchField with bfIgnoreCase in BindingAttr')
+    if TString.Compare(FieldInfo.Name, Name, true) <> 0 then
+      exit
+    else
   else
-    if FieldInfo.Name <> Name then
+    if TString.Compare(FieldInfo.Name, Name) <> 0 then
       exit;
 
   if FieldInfo.DeclaringType.RuntimeTypeHandle <> OwnerType.RuntimeTypeHandle then

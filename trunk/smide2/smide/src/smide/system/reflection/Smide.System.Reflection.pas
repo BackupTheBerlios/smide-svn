@@ -8,7 +8,8 @@ uses
   Smide.System.Common,
   Smide.System.Types.Common,
   Smide.System.Runtime,
-  Smide.System.Collections;
+  Smide.System.Collections,
+  Smide.System.Globalization;
 
 type
   TBindingFlag = (
@@ -160,12 +161,12 @@ type
     property CallingConventions: TCallingConventions read get_CallingConventions;
   protected
     procedure InvokeImpl(const Obj; InvokeAttr: TBindingFlags; Binder: TBinder;
-      Parameters: array of const; {culture: CultureInfo;} out Result); virtual; abstract;
+      Parameters: array of const; Culture: TCultureInfo; out Result); virtual; abstract;
   public
     // TODO: class function GetCurrentMethod: MethodBase;
     procedure Invoke(const Obj; Parameters: array of const; out Result); overload;
     procedure Invoke(const Obj; InvokeAttr: TBindingFlags; Binder: TBinder;
-      Parameters: array of const; {culture: CultureInfo;} out Result); overload;
+      Parameters: array of const; Culture: TCultureInfo; out Result); overload;
   end;
 
   TMethodInfo = class(TMethodBase)
@@ -364,7 +365,7 @@ type
 
     procedure InvokeMember(Name: WideString; InvokeAttr: TBindingFlags; Binder: TBinder;
       const Target; Args: array of const; Modifiers: array of TParameterModifier;
-      {CultureInfo culture,}NamedParameters: array of WideString; out Result);
+      Culture: TCultureInfo; NamedParameters: array of WideString; out Result);
 
     function get_UnderlyingSystemType: TType;
     property UnderlyingSystemType: TType read get_UnderlyingSystemType;
@@ -415,7 +416,7 @@ type
 
     procedure InvokeMember(Name: WideString; InvokeAttr: TBindingFlags; Binder: TBinder;
       const Target; Args: array of const; Modifiers: array of TParameterModifier;
-      {CultureInfo culture,}NamedParameters: array of WideString; out Result); virtual;
+      Culture: TCultureInfo; NamedParameters: array of WideString; out Result); virtual;
 
     function get_UnderlyingSystemType: TType; virtual;
     property UnderlyingSystemType: TType read get_UnderlyingSystemType;
@@ -584,13 +585,13 @@ end;
 
 procedure TMethodBase.Invoke(const Obj; Parameters: array of const; out Result);
 begin
-  Invoke(Obj, bfDefault, nil, Parameters, Result);
+  Invoke(Obj, bfDefault, nil, Parameters, nil, Result);
 end;
 
 procedure TMethodBase.Invoke(const Obj; InvokeAttr: TBindingFlags;
-  Binder: TBinder; Parameters: array of const; out Result);
+  Binder: TBinder; Parameters: array of const; Culture: TCultureInfo; out Result);
 begin
-  InvokeImpl(Obj, InvokeAttr, Binder, Parameters, Result);
+  InvokeImpl(Obj, InvokeAttr, Binder, Parameters, Culture, Result);
 end;
 
 { TMethodInfo }
@@ -763,7 +764,7 @@ end;
 { TType }
 
 const
-  bfDefaultLookup = [bfInstance, bfStatic, bfPublic];
+  bfDefaultLookup = [bfIgnoreCase, bfInstance, bfStatic, bfPublic];
 
 procedure TType.ClearValue(var Value);
 begin
@@ -924,7 +925,7 @@ end;
 
 procedure TType.InvokeMember(Name: WideString; InvokeAttr: TBindingFlags; Binder: TBinder;
   const Target; Args: array of const; Modifiers: array of TParameterModifier;
-  NamedParameters: array of WideString; out Result);
+  Culture: TCultureInfo; NamedParameters: array of WideString; out Result);
 begin
   raise ENotSupported.Create('IReflect.InvokeMember');
 end;
