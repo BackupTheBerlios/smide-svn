@@ -20,6 +20,7 @@ type
 implementation
 
 uses
+  Tests.Smide.System.Strings,
   Tests.Smide.System.Types.AllTests;
 
 { TAllTests }
@@ -34,6 +35,8 @@ var
   Suite: TTestSuite;
 begin
   Suite := TTestSuite.Create('Smide Tests');
+
+  Suite.AddTestSuite(Tests.Smide.System.Strings.TStringsTest);
 
   Suite.AddTest(Tests.Smide.System.Types.AllTests.TAllTests.Suite);
 

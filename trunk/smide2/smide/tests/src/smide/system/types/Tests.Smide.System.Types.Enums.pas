@@ -30,6 +30,8 @@ type
     // TODO: procedure TestEnum1ValueFieldGetValue;
     procedure TestEnum1GetFieldToString;
     procedure TestEnum2GetFieldToString;
+    procedure TestEnum1GetField;
+    procedure TestEnum2GetField;
   end;
 
 implementation
@@ -128,6 +130,36 @@ procedure TEnumsTest.TestEnum2GetFieldToString;
 begin
   AssertEquals('TE0: TTestEnum1', FEnumType2.GetFields[Ord(TE0)].ToString);
   AssertEquals('TE1: TTestEnum1', FEnumType2.GetFields[Ord(TE1)].ToString);
+end;
+
+procedure TEnumsTest.TestEnum1GetField;
+begin
+  AssertNotNil(FEnumType1.GetField('TE1'));
+  AssertNil(FEnumType1.GetField('ABC'));
+
+  AssertEquals('TE1', FEnumType1.GetField('TE1').Name);
+
+  AssertNil(FEnumType1.GetField('TE1', [bfPublic]));
+
+  AssertEquals('TE1', FEnumType1.GetField('TE1', [bfPublic, bfStatic]).Name);
+  AssertEquals('TE1', FEnumType1.GetField('TE1', [bfPublic, bfStatic, bfDeclaredOnly]).Name);
+
+  AssertNil(FEnumType1.GetField('TE1', [bfNonPublic]));
+end;
+
+procedure TEnumsTest.TestEnum2GetField;
+begin
+  AssertNotNil(FEnumType2.GetField('TE1'));
+  AssertNil(FEnumType2.GetField('ABC'));
+
+  AssertEquals('TE1', FEnumType2.GetField('TE1').Name);
+
+  AssertNil(FEnumType2.GetField('TE1', [bfPublic]));
+
+  AssertEquals('TE1', FEnumType2.GetField('TE1', [bfPublic, bfStatic]).Name);
+  AssertNil(FEnumType2.GetField('TE1', [bfPublic, bfStatic, bfDeclaredOnly]));
+
+  AssertNil(FEnumType2.GetField('TE1', [bfNonPublic]));
 end;
 
 end.

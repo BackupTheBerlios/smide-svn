@@ -38,6 +38,8 @@ type
   public
     function GetField(Name: WideString; BindingAttr: TBindingFlags): TFieldInfo; virtual;
     function GetFields(BindingAttr: TBindingFlags): IFieldInfoCollection; virtual;
+
+    function MatchField(FieldInfo: TFieldInfo; Name: WideString; BindingAttr: TBindingFlags): Boolean;
   protected
   end;
 
@@ -58,9 +60,56 @@ end;
 
 { TFieldCollector }
 
+function TFieldCollector.MatchField(FieldInfo: TFieldInfo; Name: WideString; BindingAttr: TBindingFlags): Boolean;
+begin
+  Result := false;
+
+  if FieldInfo.IsPublic then
+    if not (bfPublic in BindingAttr) then
+      exit
+    else
+  else
+    if not (bfNonPublic in BindingAttr) then
+      exit;
+
+  if FieldInfo.IsStatic then
+    if not (bfStatic in BindingAttr) then
+      exit
+    else
+  else
+    if not (bfInstance in BindingAttr) then
+      exit;
+
+  if bfIgnoreCase in BindingAttr then
+    raise ENotImplemented.Create('TFieldCollector.MatchField with bfIgnoreCase in BindingAttr')
+  else
+    if FieldInfo.Name <> Name then
+      exit;
+
+  if FieldInfo.DeclaringType.RuntimeTypeHandle <> OwnerType.RuntimeTypeHandle then
+    if (bfDeclaredOnly in BindingAttr) then
+      exit;
+
+  Result := true;
+end;
+
 function TFieldCollector.GetField(Name: WideString; BindingAttr: TBindingFlags): TFieldInfo;
+var
+  i: Integer;
 begin
   Result := nil;
+
+  if Name = '' then
+    raise EArgumentEmpty.Create('Name');
+
+  for i := 0 to FieldInfos.Count - 1 do
+  begin
+    if MatchField(FieldInfos[i], Name, BindingAttr) then
+    begin
+      Result := FieldInfos[i];
+      break;
+    end;
+  end;
 end;
 
 function TFieldCollector.GetFields(BindingAttr: TBindingFlags): IFieldInfoCollection;

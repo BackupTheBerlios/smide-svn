@@ -47,6 +47,7 @@ uses
 
 type
   EAssertionFailedException = class(Exception)
+  public
   end;
 
   EComparisonFailure = class(EAssertionFailedException)
@@ -57,7 +58,7 @@ type
   protected
     function get_Message: WideString; override;
   public
-    constructor Create(Message: WideString; Expected: WideString; Actual: WideString);
+    constructor Create(Message: WideString; Expected: WideString; Actual: WideString); overload;
     property Expected: WideString read FExcepted;
     property Actual: WideString read FActual;
   end;
@@ -545,6 +546,8 @@ begin
     Result := (B - A) <= Epsilon;
 end;
 
+{ EAssertionFailedException }
+
 { EComparisonFailure }
 
 constructor EComparisonFailure.Create(Message, Expected,
@@ -558,7 +561,8 @@ end;
 function EComparisonFailure.get_Message: WideString;
 begin
   // TODO: cut long strings "..." look at junit
-  Result := TAssert.Format(inherited Message, FExpected, FActual);
+  Result := inherited get_Message;
+  Result := TAssert.Format(Result, FExpected, FActual);
 end;
 
 type
@@ -1435,7 +1439,7 @@ end;
 
 procedure TTestSuite.AddTest(Test: ITest);
 begin
-  if Test=nil then
+  if Test = nil then
     raise EArgumentNil.Create('Test');
   FTests.Add(Test);
 end;

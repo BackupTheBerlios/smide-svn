@@ -112,6 +112,12 @@ type
     constructor Create(ParamName: WideString); overload;
   end;
 
+  EArgumentEmpty = class(EArgument)
+  public
+    constructor Create; override;
+    constructor Create(ParamName: WideString); overload;
+  end;
+
   EArgumentOutOfRange = class(EArgument)
   private
     FActualValue: WideString;
@@ -350,6 +356,18 @@ begin
   inherited Create(_('Value cannot be nil.'), ParamName);
 end;
 
+{ EArgumentEmpty }
+
+constructor EArgumentEmpty.Create;
+begin
+  inherited Create(_('Value cannot be empty.'));
+end;
+
+constructor EArgumentEmpty.Create(ParamName: WideString);
+begin
+  inherited Create(_('Value cannot be empty.'), ParamName);
+end;
+
 { EArgumentOutOfRange }
 
 constructor EArgumentOutOfRange.Create(ParamName: WideString);
@@ -425,6 +443,7 @@ constructor ETarget.Create;
 begin
   inherited Create(_('Attempt has been made to call an invalid target.'));
 end;
+
 
 end.
 

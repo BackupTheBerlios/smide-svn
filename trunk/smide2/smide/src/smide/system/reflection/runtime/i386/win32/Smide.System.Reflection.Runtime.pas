@@ -185,7 +185,7 @@ type
 var
   FMethod: TVoidMethod;
 begin
-  // TODO:
+  // TODO: InvokeImpl
   TMethod(FMethod).Code := FAddress;
   TMethod(FMethod).Data := Pointer(Obj);
 
