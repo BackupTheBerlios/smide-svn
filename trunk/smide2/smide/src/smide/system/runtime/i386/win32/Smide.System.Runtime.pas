@@ -24,7 +24,7 @@ type
     class function NewInstance: TObject; override;
   public
     function ToString: WideString; overload; virtual;
-    function GetHashCode: Integer; virtual;
+    function GetHashCode: Integer; overload; virtual;
     function Equals(Obj: TObject): Boolean; overload; virtual;
     class function Equals(ObjA, ObjB: TObject): Boolean; overload;
     class function ReferenceEquals(ObjA, ObjB: TObject): Boolean;

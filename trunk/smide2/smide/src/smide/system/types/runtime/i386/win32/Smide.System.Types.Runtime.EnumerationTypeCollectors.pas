@@ -92,7 +92,7 @@ begin
     end;
 
     // this is the value field
-    FieldInfo := TRuntimeFieldInfo.Create(FIELD_VALUE_HANDLE, FIELD_VALUE_NAME, OwnerType, OwnerType, [faPublic, faSpecialName, faRTSpecialName],
+    FieldInfo := TRuntimeEnumerationValueFieldInfo.Create(FIELD_VALUE_HANDLE, FIELD_VALUE_NAME, OwnerType, OwnerType, [faPublic, faSpecialName, faRTSpecialName],
       TRuntimeType.GetRuntimeOrdinalType(OwnerType.RuntimeTypeHandle));
     FFields.Add(FieldInfo);
   end;

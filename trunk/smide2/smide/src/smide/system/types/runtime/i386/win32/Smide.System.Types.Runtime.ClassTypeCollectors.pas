@@ -123,20 +123,28 @@ begin
   begin
     FFields := TFieldInfoCollection.Create(true);
 
-    FieldInfoPtr := PPointer(Integer(OwnerType.RuntimeTypeInfoData^.ClassType) + vmtFieldTable)^;
-
-    FieldPtr := @FieldInfoPtr^.Fields;
-    for i := 0 to FieldInfoPtr^.Count - 1 do
+    if Assigned(OwnerType.BaseType) then
     begin
-
-      FieldInfo := TRuntimeClassFieldInfo.Create(FieldPtr, FieldPtr^.Name, OwnerType, OwnerType, [faPublic],
-        TType.GetType(FieldInfoPtr^.FieldClassTable^.Classes[FieldPtr^.ClassIndex]^));
-
-      FFields.Add(FieldInfo);
-
-      Inc(Integer(FieldPtr), SizeOf(TField) - SizeOf(ShortString) + Length(FieldPtr^.Name) + 1);
+      with OwnerType.BaseType.GetFields.GetEnumerator do
+        while MoveNext do
+          FFields.Add(TRuntimeInheritedFieldInfo.Create(Current, OwnerType));
     end;
 
+    FieldInfoPtr := PPointer(Integer(OwnerType.RuntimeTypeInfoData^.ClassType) + vmtFieldTable)^;
+    if FieldInfoPtr <> nil then
+    begin
+      FieldPtr := @FieldInfoPtr^.Fields;
+      for i := 0 to FieldInfoPtr^.Count - 1 do
+      begin
+
+        FieldInfo := TRuntimeClassFieldInfo.Create(FieldPtr, FieldPtr^.Name, OwnerType, OwnerType, [faPublic],
+          TType.GetType(FieldInfoPtr^.FieldClassTable^.Classes[FieldPtr^.ClassIndex]^));
+
+        FFields.Add(FieldInfo);
+
+        Inc(Integer(FieldPtr), SizeOf(TField) - SizeOf(ShortString) + Length(FieldPtr^.Name) + 1);
+      end;
+    end;
   end;
   Result := FFields;
 end;

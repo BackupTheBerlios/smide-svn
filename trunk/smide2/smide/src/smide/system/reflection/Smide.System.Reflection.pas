@@ -381,6 +381,7 @@ type
     function SameValues(const Value1; const Value2): Boolean; virtual;
     function ValueToString(const Value): WideString;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider = nil): WideString; virtual;
+    function GetHashCode(const Value): Integer; overload; virtual;
   private
     FRuntimeTypeHandle: TRuntimeTypeHandle;
     FRuntimeTypeInfoData: TRuntimeTypeInfoData;
@@ -1108,7 +1109,7 @@ end;
 
 function TType.ToString: WideString;
 begin
-  Result := 'Type: ' + Name;
+  Result := FullName;
 end;
 
 function TType.get_RuntimeTypeHandle: TRuntimeTypeHandle;
@@ -1134,6 +1135,11 @@ end;
 class function TType.GetTypeDataTypeHandler: ITypeHandler;
 begin
   Result := TRuntimeType.GetRuntimeTypeDataTypeHandler;
+end;
+
+function TType.GetHashCode(const Value): Integer;
+begin
+  raise ENotSupported.Create('ITypeHandler.GetHashCode');
 end;
 
 end.

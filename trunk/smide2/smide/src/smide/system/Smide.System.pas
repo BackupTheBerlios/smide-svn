@@ -26,6 +26,7 @@ type
   EUnknownType = Smide.System.Common.EUnknownType;
   ENotSupported = Smide.System.Common.ENotSupported;
   ENoClassInfo = Smide.System.Common.ENoClassInfo;
+  ETarget = Smide.System.Common.ETarget;
 
   // Statics
   TStaticBase = Smide.System.Common.TStaticBase;

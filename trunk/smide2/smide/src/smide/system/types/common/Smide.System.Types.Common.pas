@@ -22,6 +22,8 @@ type
     function ValueToString(const Value): WideString;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider = nil): WideString;
 
+    function GetHashCode(const Value): integer;
+
     function get_TypeSize: Integer;
     property TypeSize: Integer read get_TypeSize;
 

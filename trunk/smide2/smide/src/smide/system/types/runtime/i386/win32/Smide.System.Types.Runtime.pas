@@ -352,7 +352,7 @@ begin
   if Instance = nil then
     raise EArgumentNil.Create('Instance');
 
-  Result := GetType(GetClassTypeInfo(Instance.ClassType));
+  Result := GetRuntimeType(GetClassTypeInfo(Instance.ClassType));
 end;
 
 class function TRuntimeType.GetClassTypeInfo(AClass: TClass): PTypeInfo;
@@ -373,7 +373,7 @@ begin
   if AClass = nil then
     raise EArgumentNil.Create('AClass');
 
-  Result := GetType(GetClassTypeInfo(AClass));
+  Result := GetRuntimeType(GetClassTypeInfo(AClass));
 end;
 
 class function TRuntimeType.GetRuntimeTypeDataTypeHandler: ITypeHandler;
@@ -406,7 +406,7 @@ begin
   if Instance = nil then
     raise EArgumentNil.Create('Instance');
 
-  Result := GetTypeHandler(GetClassTypeInfo(Instance.ClassType));
+  Result := GetRuntimeTypeHandler(GetClassTypeInfo(Instance.ClassType));
 end;
 
 class function TRuntimeType.GetRuntimeTypeHandler(AClass: TClass): ITypeHandler;
@@ -414,7 +414,7 @@ begin
   if AClass = nil then
     raise EArgumentNil.Create('AClass');
 
-  Result := GetTypeHandler(GetClassTypeInfo(AClass));
+  Result := GetRuntimeTypeHandler(GetClassTypeInfo(AClass));
 end;
 
 { TRuntimeRangeOrdinalType }
@@ -798,7 +798,10 @@ end;
 
 function TRuntimeClassType.get_BaseType: TType;
 begin
-  Result := TType.GetType(RuntimeTypeInfoData^.ParentInfo^);
+  if RuntimeTypeInfoData^.ParentInfo <> nil then
+    Result := TType.GetType(RuntimeTypeInfoData^.ParentInfo^)
+  else
+    Result := nil;
 end;
 
 function TRuntimeClassType.GetMethod(Name: WideString; BindingAttr: TBindingFlags): TMethodInfo;

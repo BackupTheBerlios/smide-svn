@@ -144,6 +144,11 @@ type
     constructor Create; override;
   end;
 
+  ETarget = class(ESystem)
+  public
+    constructor Create; override;
+  end;
+
 type
   IFormatProvider = interface
     ['{3AB5BE6C-5D18-4D8A-B8BD-1A4BC509B51D}']
@@ -412,6 +417,13 @@ end;
 constructor ENoClassInfo.Create;
 begin
   inherited Create(_('Cannot find class info for type.'));
+end;
+
+{ ETarget }
+
+constructor ETarget.Create;
+begin
+  inherited Create(_('Attempt has been made to call an invalid target.'));
 end;
 
 end.

@@ -56,10 +56,10 @@ type
     function get_FieldHandle: TRuntimeFieldHandle; override;
     function get_Attributes: TFieldAttributes; override;
   public
-    procedure GetValue(const Obj; out Result); override;
-  public
     constructor Create(FieldHandle: TRuntimeFieldHandle; Name: WideString;
       ReflectedType, DeclaringType: TType; Attributes: TFieldAttributes; FieldType: TType);
+
+    function ToString: widestring; override;
   end;
 
   TRuntimeInheritedFieldInfo = class(TFieldInfo)
@@ -78,6 +78,8 @@ type
     procedure GetValue(const Obj; out Result); override;
   public
     constructor Create(FieldInfo: TFieldInfo; ReflectedType: TType);
+
+    function ToString: widestring; override;
   end;
 
   TRuntimeEnumerationFieldInfo = class(TRuntimeFieldInfo)
@@ -89,14 +91,22 @@ type
     constructor Create(FieldHandle: TRuntimeFieldHandle; Name: WideString; ReflectedType, DeclaringType: TType; FieldType: TType; Value: Longint);
   end;
 
+  TRuntimeEnumerationValueFieldInfo = class(TRuntimeFieldInfo)
+  public
+    procedure GetValue(const Obj; out Result); override;
+  end;
+
   TRuntimeClassFieldInfo = class(TRuntimeFieldInfo)
+  public
+    procedure GetValue(const Obj; out Result); override;
   end;
 
 implementation
 
 uses
   Smide.System.Types.Runtime.TypeInfo,
-  Smide.System.Types.Runtime.TypeHandlers;
+  Smide.System.Types.Runtime.TypeHandlers,
+  Smide.System.Common.GetText;
 
 { TRuntimeMethodInfo }
 
@@ -228,9 +238,9 @@ begin
   Result := FReflectedType;
 end;
 
-procedure TRuntimeFieldInfo.GetValue(const Obj; out Result);
+function TRuntimeFieldInfo.ToString: widestring;
 begin
-  raise ENotImplemented.Create('TRuntimeFieldInfo.GetValue');
+  result := Name + ': ' + FieldType.ToString;
 end;
 
 { TRuntimeInheritedFieldInfo }
@@ -282,6 +292,11 @@ begin
   FFieldInfo.GetValue(Obj, Result);
 end;
 
+function TRuntimeInheritedFieldInfo.ToString: widestring;
+begin
+  result := FFieldInfo.ToString;
+end;
+
 { TRuntimeEnumerationFieldInfo }
 
 constructor TRuntimeEnumerationFieldInfo.Create(
@@ -306,6 +321,26 @@ begin
   else
     raise EUnknownType.Create(Name);
   end;
+end;
+
+{ TRuntimeEnumerationValueFieldInfo }
+
+procedure TRuntimeEnumerationValueFieldInfo.GetValue(const Obj; out Result);
+begin
+  raise ENotImplemented.Create('TFieldInfo.GetValue');
+end;
+
+{ TRuntimeClassFieldInfo }
+
+procedure TRuntimeClassFieldInfo.GetValue(const Obj; out Result);
+begin
+  if (pointer(Obj)=nil) and not IsStatic then
+    raise ETarget.Create(_('Non-static field requires a target'));
+
+  if not TType.GetType(TObject(Obj)).IsSubclassOf(ReflectedType) then
+    raise EArgument.Create(_('Object type cannot be converted to target type.'));
+
+  FieldType.DataToValue(TDataType(PPointer(integer(Obj) + PField(FieldHandle)^.Offset)^), Result);
 end;
 
 end.

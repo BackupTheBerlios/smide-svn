@@ -52,6 +52,7 @@ type
     procedure TestUserShortString;
     procedure TestUserTypeInteger;
 
+    // TODO: Array-, Dynamicarray-, Record & Variant types,
     procedure TestGetTypeTypeInfoNil;
     procedure TestObjectGetTypeClassClassInfoNil;
     procedure TestObjectGetTypeInstanceClassInfoNil;

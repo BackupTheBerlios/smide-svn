@@ -26,6 +26,10 @@ type
     procedure TestEnum1GetFields;
     procedure TestEnum2GetFields;
     procedure TestBaseType;
+    procedure TestEnum1FieldGetValue;
+    // TODO: procedure TestEnum1ValueFieldGetValue;
+    procedure TestEnum1GetFieldToString;
+    procedure TestEnum2GetFieldToString;
   end;
 
 implementation
@@ -75,9 +79,6 @@ begin
   // Public Static
   AssertEquals(4, FEnumType2.GetFields([bfPublic, bfStatic]).Count);
 
-  // Public Static
-  AssertEquals(4, FEnumType2.GetFields([bfPublic, bfStatic]).Count);
-
   // Public Instance
   AssertEquals(1, FEnumType2.GetFields([bfPublic, bfInstance]).Count);
 
@@ -103,7 +104,30 @@ end;
 
 procedure TEnumsTest.TestBaseType;
 begin
-  AssertEquals(FEnumType2.BaseType, FEnumType1);
+  AssertEquals(nil, FEnumType1.BaseType);
+  AssertEquals(FEnumType1, FEnumType2.BaseType);
+end;
+
+procedure TEnumsTest.TestEnum1FieldGetValue;
+var
+  Var1: TTestEnum1;
+  Var2: TTestEnum1;
+begin
+  Var1 := TE0;
+  FEnumType1.GetFields[Ord(TE0)].GetValue(Var1, Var2);
+  AssertTrue(Var1 = Var2);
+end;
+
+procedure TEnumsTest.TestEnum1GetFieldToString;
+begin
+  AssertEquals('TE0: TTestEnum1', FEnumType1.GetFields[Ord(TE0)].ToString);
+  AssertEquals('TE1: TTestEnum1', FEnumType1.GetFields[Ord(TE1)].ToString);
+end;
+
+procedure TEnumsTest.TestEnum2GetFieldToString;
+begin
+  AssertEquals('TE0: TTestEnum1', FEnumType2.GetFields[Ord(TE0)].ToString);
+  AssertEquals('TE1: TTestEnum1', FEnumType2.GetFields[Ord(TE1)].ToString);
 end;
 
 end.
