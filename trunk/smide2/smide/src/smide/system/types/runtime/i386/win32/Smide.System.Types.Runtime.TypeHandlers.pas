@@ -1484,7 +1484,7 @@ begin
   v2 := [];
   Move(Value2, v2, TypeSize);
 
-  Result := Integer(((v1 - v2) <> []) or ((v2 - v1) <> []));
+  Result := Integer((v1 <> v2));
 end;
 
 procedure TSetType.DataToValue(const Data: TTypeData; var Value);
@@ -1512,28 +1512,28 @@ begin
       if Result <> '' then
         Result := Result + ', ';
       with GetElementType do
+      begin
         v := i + (MinValue - MinValue mod 8);
-      Result := Result + GetElementType.ValueToString(v);
+        Result := Result + ValueToString(v);
+      end;
       Inc(i);
       if i in S then
       begin
         l := i;
 
-        Inc(i);
         while (i < 256) and (i in S) do
         begin
           Inc(i);
         end;
 
-        if i > l + 1 then
+        if i > l then
         begin
-          l := i - 1;
           with GetElementType do
-            v := l + (MinValue - MinValue mod 8);
-          Result := Result + '..' + GetElementType.ValueToString(l);
-        end
-        else
-          i := l;
+          begin
+            v := (i - 1) + (MinValue - MinValue mod 8);
+            Result := Result + '..' + ValueToString(v);
+          end;
+        end;
       end;
     end
     else

@@ -42,7 +42,13 @@ type
     procedure TestWordBool;
     procedure TestSetConstants;
     procedure TestSetChar;
-    procedure TestSetCustomType;
+    procedure TestSetCustomType1Byte;
+    procedure TestSetCustomType2Byte;
+    procedure TestSetCustomType3Byte;
+    procedure TestSetCustomType4Byte;
+    procedure TestSetCustomType5Byte;
+    procedure TestSetCustomType16Byte;
+    procedure TestSetCustomType32Byte;
     procedure TestUserShortString;
     procedure TestUserTypeInteger;
   end;
@@ -341,7 +347,7 @@ var
 begin
   Value1 := [S1, S2];
   Value2 := [S1];
-  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetConstants)), SizeOf(Value1), Value1, Value2, 'S1, S2', 'S1');
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetConstants)), SizeOf(Value1), Value1, Value2, 'S1..S2', 'S1');
   Expected1 := [];
   Expected2 := [S1, S2];
   AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetConstants)), Expected1, Value1);
@@ -366,21 +372,130 @@ begin
 end;
 
 type
-  TTestCustomType = 64..65;
-  TTestSetCustomType = set of TTestCustomType;
+  TTestCustomType1Byte = 1..7;
+  TTestSetCustomType1Byte = set of TTestCustomType1Byte;
 
-procedure TTypeHandlerTest.TestSetCustomType;
+procedure TTypeHandlerTest.TestSetCustomType1Byte;
 var
-  Value1, Value2: TTestSetCustomType;
-  Expected1, Expected2: TTestSetCustomType;
+  Value1, Value2: TTestSetCustomType1Byte;
+  Expected1, Expected2: TTestSetCustomType1Byte;
 begin
-  Value1 := [64];
-  Value2 := [64, 65];
-  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetCustomType)), SizeOf(Value1), Value1, Value2, '64', '64, 65');
+  Value1 := [1..7];
+  Value2 := [1, 3, 5];
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetCustomType1Byte)), SizeOf(Value1), Value1, Value2, '1..7', '1, 3, 5');
   Expected1 := [];
-  Expected2 := [64];
-  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType)), Expected1, Value1);
-  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType)), Expected2, Value2);
+  Expected2 := [1..7];
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType1Byte)), Expected1, Value1);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType1Byte)), Expected2, Value2);
+end;
+
+type
+  TTestCustomType2Byte = 1..15;
+  TTestSetCustomType2Byte = set of TTestCustomType2Byte;
+
+procedure TTypeHandlerTest.TestSetCustomType2Byte;
+var
+  Value1, Value2: TTestSetCustomType2Byte;
+  Expected1, Expected2: TTestSetCustomType2Byte;
+begin
+  Value1 := [1..15];
+  Value2 := [1, 3, 5];
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetCustomType2Byte)), SizeOf(Value1), Value1, Value2, '1..15', '1, 3, 5');
+  Expected1 := [];
+  Expected2 := [1..15];
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType2Byte)), Expected1, Value1);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType2Byte)), Expected2, Value2);
+end;
+
+type
+  TTestCustomType3Byte = 1..23;
+  TTestSetCustomType3Byte = set of TTestCustomType3Byte;
+
+procedure TTypeHandlerTest.TestSetCustomType3Byte;
+var
+  Value1, Value2: TTestSetCustomType3Byte;
+  Expected1, Expected2: TTestSetCustomType3Byte;
+begin
+  Value1 := [1..31];
+  Value2 := [1, 3, 5];
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetCustomType3Byte)), SizeOf(Value1), Value1, Value2, '1..31', '1, 3, 5');
+  Expected1 := [];
+  Expected2 := [1..31];
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType3Byte)), Expected1, Value1);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType3Byte)), Expected2, Value2);
+end;
+
+type
+  TTestCustomType4Byte = 1..31;
+  TTestSetCustomType4Byte = set of TTestCustomType4Byte;
+
+procedure TTypeHandlerTest.TestSetCustomType4Byte;
+var
+  Value1, Value2: TTestSetCustomType4Byte;
+  Expected1, Expected2: TTestSetCustomType4Byte;
+begin
+  Value1 := [1..31];
+  Value2 := [1, 3, 5];
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetCustomType4Byte)), SizeOf(Value1), Value1, Value2, '1..31', '1, 3, 5');
+  Expected1 := [];
+  Expected2 := [1..31];
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType4Byte)), Expected1, Value1);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType4Byte)), Expected2, Value2);
+end;
+
+type
+  TTestCustomType5Byte = 1..39;
+  TTestSetCustomType5Byte = set of TTestCustomType5Byte;
+
+procedure TTypeHandlerTest.TestSetCustomType5Byte;
+var
+  Value1, Value2: TTestSetCustomType5Byte;
+  Expected1, Expected2: TTestSetCustomType5Byte;
+begin
+  Value1 := [1..39];
+  Value2 := [1, 3, 5];
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetCustomType5Byte)), SizeOf(Value1), Value1, Value2, '1..39', '1, 3, 5');
+  Expected1 := [];
+  Expected2 := [1..39];
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType5Byte)), Expected1, Value1);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType5Byte)), Expected2, Value2);
+end;
+
+type
+  TTestCustomType16Byte = 1..127;
+  TTestSetCustomType16Byte = set of TTestCustomType16Byte;
+
+procedure TTypeHandlerTest.TestSetCustomType16Byte;
+var
+  Value1, Value2: TTestSetCustomType16Byte;
+  Expected1, Expected2: TTestSetCustomType16Byte;
+begin
+  Value1 := [1..127];
+  Value2 := [1, 3, 5];
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetCustomType16Byte)), SizeOf(Value1), Value1, Value2, '1..127', '1, 3, 5');
+  Expected1 := [];
+  Expected2 := [1..127];
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType16Byte)), Expected1, Value1);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType16Byte)), Expected2, Value2);
+end;
+
+
+type
+  TTestCustomType32Byte = 1..255;
+  TTestSetCustomType32Byte = set of TTestCustomType32Byte;
+
+procedure TTypeHandlerTest.TestSetCustomType32Byte;
+var
+  Value1, Value2: TTestSetCustomType32Byte;
+  Expected1, Expected2: TTestSetCustomType32Byte;
+begin
+  Value1 := [1..255];
+  Value2 := [1, 3, 5];
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetCustomType32Byte)), SizeOf(Value1), Value1, Value2, '1..255', '1, 3, 5');
+  Expected1 := [];
+  Expected2 := [1..255];
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType32Byte)), Expected1, Value1);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType32Byte)), Expected2, Value2);
 end;
 
 procedure TTypeHandlerTest.TestShortString;
