@@ -35,12 +35,11 @@ type
   protected
     function GetFieldInfos: TFieldInfoCollection; virtual; abstract;
     property FieldInfos: TFieldInfoCollection read GetFieldInfos;
+
+    function MatchField(FieldInfo: TFieldInfo; Name: WideString; BindingAttr: TBindingFlags): Boolean;
   public
     function GetField(Name: WideString; BindingAttr: TBindingFlags): TFieldInfo; virtual;
     function GetFields(BindingAttr: TBindingFlags): IFieldInfoCollection; virtual;
-
-    function MatchField(FieldInfo: TFieldInfo; Name: WideString; BindingAttr: TBindingFlags): Boolean;
-  protected
   end;
 
 implementation
