@@ -232,16 +232,16 @@ type
   end;
 
   TFieldAttribute = (
-    ftPrivate,
-    ftPublic,
-    ftStatic,
+    faPrivate,
+    faPublic,
+    faStatic,
 
-    ftInitOnly,
-    ftLiteral,
-    ftNotSerialized,
-    ftSpecialName,
-    ftRTSpecialName,
-    ftHasDefault
+    faInitOnly,
+    faLiteral,
+    faNotSerialized,
+    faSpecialName,
+    faRTSpecialName,
+    faHasDefault
     );
   TFieldAttributes = set of TFieldAttribute;
 
@@ -662,37 +662,37 @@ end;
 
 function TFieldInfo.get_IsInitOnly: Boolean;
 begin
-  Result := ftInitOnly in Attributes;
+  Result := faInitOnly in Attributes;
 end;
 
 function TFieldInfo.get_IsLiteral: Boolean;
 begin
-  Result := ftLiteral in Attributes;
+  Result := faLiteral in Attributes;
 end;
 
 function TFieldInfo.get_IsNotSerialized: Boolean;
 begin
-  Result := ftNotSerialized in Attributes;
+  Result := faNotSerialized in Attributes;
 end;
 
 function TFieldInfo.get_IsPrivate: Boolean;
 begin
-  Result := ftPrivate in Attributes;
+  Result := faPrivate in Attributes;
 end;
 
 function TFieldInfo.get_IsPublic: Boolean;
 begin
-  Result := ftPublic in Attributes;
+  Result := faPublic in Attributes;
 end;
 
 function TFieldInfo.get_IsSpecialName: Boolean;
 begin
-  Result := ftSpecialName in Attributes;
+  Result := faSpecialName in Attributes;
 end;
 
 function TFieldInfo.get_IsStatic: Boolean;
 begin
-  Result := ftStatic in Attributes;
+  Result := faStatic in Attributes;
 end;
 
 function TFieldInfo.get_MemberType: TMemberType;
@@ -868,9 +868,7 @@ end;
 
 class function TType.GetType(Instance: TObject): TType;
 begin
-  if Instance = nil then
-    raise EArgumentNil.Create('Instance');
-  Result := GetType(Instance.ClassInfo);
+  Result := TRuntimeType.GetRuntimeType(Instance);
 end;
 
 class function TType.GetType(TypeHandle: TRuntimeTypeHandle): TType;
@@ -885,23 +883,17 @@ end;
 
 class function TType.GetType(AClass: TClass): TType;
 begin
-  if AClass = nil then
-    raise EArgumentNil.Create('AClass');
-  Result := GetType(AClass.ClassInfo);
+  Result := TRuntimeType.GetRuntimeType(AClass);
 end;
 
 class function TType.GetTypeHandler(AClass: TClass): ITypeHandler;
 begin
-  if AClass = nil then
-    raise EArgumentNil.Create('AClass');
-  Result := GetTypeHandler(AClass.ClassInfo);
+  Result := TRuntimeType.GetRuntimeTypeHandler(AClass);
 end;
 
 class function TType.GetTypeHandler(Instance: TObject): ITypeHandler;
 begin
-  if Instance = nil then
-    raise EArgumentNil.Create('Instance');
-  Result := GetTypeHandler(Instance.ClassInfo);
+  Result := TRuntimeType.GetRuntimeTypeHandler(Instance);
 end;
 
 class function TType.GetTypeHandler(TypeInfo: TRuntimeTypeHandle): ITypeHandler;

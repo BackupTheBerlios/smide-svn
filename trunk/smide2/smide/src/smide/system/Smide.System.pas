@@ -25,6 +25,7 @@ type
   EInvalidOperation = Smide.System.Common.EInvalidOperation;
   EUnknownType = Smide.System.Common.EUnknownType;
   ENotSupported = Smide.System.Common.ENotSupported;
+  ENoClassInfo = Smide.System.Common.ENoClassInfo;
 
   // Statics
   TStaticBase = Smide.System.Common.TStaticBase;

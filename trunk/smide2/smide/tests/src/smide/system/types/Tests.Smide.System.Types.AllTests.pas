@@ -21,7 +21,9 @@ implementation
 
 uses
   Tests.Smide.System.Types.Enums,
-  Tests.Smide.System.Types.TypeHandler;
+  Tests.Smide.System.Types.TypeHandlers,
+  Tests.Smide.System.Types.Types,
+  Tests.Smide.System.Types.Classes;
 
 { TAllTests }
 
@@ -37,7 +39,9 @@ begin
   Suite := TTestSuite.Create('Smide Types Tests');
 
   Suite.AddTestSuite(Tests.Smide.System.Types.Enums.TEnumsTest);
-  Suite.AddTestSuite(Tests.Smide.System.Types.TypeHandler.TTypeHandlerTest);
+  Suite.AddTestSuite(Tests.Smide.System.Types.TypeHandlers.TTypeHandlerTest);
+  Suite.AddTestSuite(Tests.Smide.System.Types.Types.TTypeTest);
+  Suite.AddTestSuite(Tests.Smide.System.Types.Classes.TClassesTest);
 
   Result := Suite;
 end;

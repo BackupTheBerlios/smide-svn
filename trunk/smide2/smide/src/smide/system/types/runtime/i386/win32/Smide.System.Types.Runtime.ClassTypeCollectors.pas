@@ -13,27 +13,27 @@ uses
 type
   TClassTypeMethodCollector = class(TMethodCollector)
   private
-    FClsType: TClassType;
     FMethods: TMethodInfoCollection;
-  protected
-    function GetMethodInfos: TMethodInfoCollection; virtual; abstract;
   public
-    function GetMethod(Name: WideString; BindingAttr: TBindingFlags; Binder: TBinder;
-      Types: ITypeCollection; Modifiers: array of TParameterModifier): TMethodInfo; override;
-    function GetMethods(BindingAttr: TBindingFlags): IMethodInfoCollection; override;
-  public
-    constructor Create(ClsType: TClassType); virtual;
+    constructor Create(OwnerType: TType); override;
     destructor Destroy; override;
-
-    property ClsType: TClassType read FClsType;
-    property Methods: TMethodInfoCollection read GetMethodInfos;
   public
-    class function CreateMethodCollector(ClsType: TClassType): TClassTypeMethodCollector;
+    class function CreateMethodCollector(OwnerType: TClassType): TClassTypeMethodCollector;
   end;
 
-  TMethodInfoMethodCollector = class(TClassTypeMethodCollector)
+  TClassTypeMethodInfoMethodCollector = class(TClassTypeMethodCollector)
   protected
     function GetMethodInfos: TMethodInfoCollection; override;
+  end;
+
+  TClassTypeFieldCollector = class(TFieldCollector)
+  private
+    FFields: TFieldInfoCollection;
+  protected
+    function GetFieldInfos: TFieldInfoCollection; override;
+  public
+    constructor Create(OwnerType: TType); override;
+    destructor Destroy; override;
   end;
 
 implementation
@@ -43,17 +43,16 @@ uses
 
 { TClassTypeMethodCollector }
 
-constructor TClassTypeMethodCollector.Create(ClsType: TClassType);
+constructor TClassTypeMethodCollector.Create(OwnerType: TType);
 begin
-  if ClsType = nil then
-    raise EArgumentNil.Create('ClsType');
-
-  FClsType := ClsType;
+  if not (OwnerType is TClassType) then
+    raise EArgument.Create('OwnerType must be of TClassType');
+  inherited;
 end;
 
-class function TClassTypeMethodCollector.CreateMethodCollector(ClsType: TClassType): TClassTypeMethodCollector;
+class function TClassTypeMethodCollector.CreateMethodCollector(OwnerType: TClassType): TClassTypeMethodCollector;
 begin
-  Result := TMethodInfoMethodCollector.Create(ClsType);
+  Result := TClassTypeMethodInfoMethodCollector.Create(OwnerType);
 end;
 
 destructor TClassTypeMethodCollector.Destroy;
@@ -62,37 +61,9 @@ begin
   inherited;
 end;
 
-function TClassTypeMethodCollector.GetMethod(Name: WideString; BindingAttr: TBindingFlags;
-  Binder: TBinder; Types: ITypeCollection; Modifiers: array of TParameterModifier): TMethodInfo;
-var
-  i: Integer;
-begin
-  Result := nil;
-  for i := 0 to Methods.Count - 1 do
-  begin
-    if Methods[i].Name = Name then
-    begin
-      Result := Methods[i];
-      exit;
-    end;
-  end;
-end;
-
-function TClassTypeMethodCollector.GetMethods(BindingAttr: TBindingFlags): IMethodInfoCollection;
-var
-  i: Integer;
-begin
-  Result := TMethodInfoCollection.Create;
-  for i := 0 to Methods.Count - 1 do
-  begin
-    // TODO: BindingAttrs
-    Result.Add(Methods[i]);
-  end;
-end;
-
 { TMethodInfoMethodCollector }
 
-function TMethodInfoMethodCollector.GetMethodInfos: TMethodInfoCollection;
+function TClassTypeMethodInfoMethodCollector.GetMethodInfos: TMethodInfoCollection;
 var
   MethodInfoPtr: Pointer;
   Count: Integer;
@@ -104,7 +75,7 @@ begin
   begin
     FMethods := TMethodInfoCollection.Create(true);
 
-    MethodInfoPtr := PPointer(Integer(ClsType.RuntimeTypeInfoData^.ClassType) + vmtMethodTable)^;
+    MethodInfoPtr := PPointer(Integer(OwnerType.RuntimeTypeInfoData^.ClassType) + vmtMethodTable)^;
 
     if MethodInfoPtr <> nil then
     begin
@@ -115,7 +86,7 @@ begin
       begin
         Address := PVmtMethodInfo(MethodInfoPtr)^.Address;
         RuntimeMethodInfo := TRuntimeMethodInfo.Create(MethodInfoPtr, PVmtMethodInfo(MethodInfoPtr)^.Name,
-          ClsType, ClsType, [maPublic], Address, nil, nil, ccUnknown, 0, 0, nil);
+          OwnerType, OwnerType, [maPublic], Address, nil, nil, ccUnknown, 0, 0, nil);
 
         FMethods.Add(RuntimeMethodInfo);
 
@@ -126,4 +97,49 @@ begin
   Result := FMethods;
 end;
 
+{ TClassTypeFieldCollector }
+
+constructor TClassTypeFieldCollector.Create(OwnerType: TType);
+begin
+  if not (OwnerType is TClassType) then
+    raise EArgument.Create('OwnerType must be of TClassType');
+  inherited;
+end;
+
+destructor TClassTypeFieldCollector.Destroy;
+begin
+  FFields.Free;
+  inherited;
+end;
+
+function TClassTypeFieldCollector.GetFieldInfos: TFieldInfoCollection;
+var
+  FieldInfoPtr: PFieldTable;
+  i: Integer;
+  FieldPtr: PField;
+  FieldInfo: TRuntimeClassFieldInfo;
+begin
+  if not Assigned(FFields) then
+  begin
+    FFields := TFieldInfoCollection.Create(true);
+
+    FieldInfoPtr := PPointer(Integer(OwnerType.RuntimeTypeInfoData^.ClassType) + vmtFieldTable)^;
+
+    FieldPtr := @FieldInfoPtr^.Fields;
+    for i := 0 to FieldInfoPtr^.Count - 1 do
+    begin
+
+      FieldInfo := TRuntimeClassFieldInfo.Create(FieldPtr, FieldPtr^.Name, OwnerType, OwnerType, [faPublic],
+        TType.GetType(FieldInfoPtr^.FieldClassTable^.Classes[FieldPtr^.ClassIndex]^));
+
+      FFields.Add(FieldInfo);
+
+      Inc(Integer(FieldPtr), SizeOf(TField) - SizeOf(ShortString) + Length(FieldPtr^.Name) + 1);
+    end;
+
+  end;
+  Result := FFields;
+end;
+
 end.
+

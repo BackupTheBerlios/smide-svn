@@ -89,6 +89,9 @@ type
     constructor Create(FieldHandle: TRuntimeFieldHandle; Name: WideString; ReflectedType, DeclaringType: TType; FieldType: TType; Value: Longint);
   end;
 
+  TRuntimeClassFieldInfo = class(TRuntimeFieldInfo)
+  end;
+
 implementation
 
 uses
@@ -286,7 +289,7 @@ constructor TRuntimeEnumerationFieldInfo.Create(
   DeclaringType, FieldType: TType; Value: Integer);
 begin
   inherited Create(FieldHandle, Name, ReflectedType, DeclaringType,
-    [ftPublic, ftStatic, ftLiteral, ftHasDefault], FieldType);
+    [faPublic, faStatic, faLiteral, faHasDefault], FieldType);
 
   FValue := Value;
 end;

@@ -1,4 +1,4 @@
-unit Tests.Smide.System.Types.TypeHandler;
+unit Tests.Smide.System.Types.TypeHandlers;
 
 interface
 
@@ -51,6 +51,11 @@ type
     procedure TestSetCustomType32Byte;
     procedure TestUserShortString;
     procedure TestUserTypeInteger;
+
+    procedure TestGetTypeTypeInfoNil;
+    procedure TestObjectGetTypeClassClassInfoNil;
+    procedure TestObjectGetTypeInstanceClassInfoNil;
+    procedure TestObjectGetTypeTypeInfoClassInfoNil;
   end;
 
 implementation
@@ -479,7 +484,6 @@ begin
   AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType16Byte)), Expected2, Value2);
 end;
 
-
 type
   TTestCustomType32Byte = 1..255;
   TTestSetCustomType32Byte = set of TTestCustomType32Byte;
@@ -579,6 +583,43 @@ begin
   TestTypeValues(TType.GetTypeHandler(TypeInfo(WordBool)), SizeOf(Value1), Value1, Value2, 'True', 'False');
   AssertFalse(Value1);
   AssertTrue(Value2);
+end;
+
+type
+  TClassInfoNilObject = class
+  end;
+
+procedure TTypeHandlerTest.TestObjectGetTypeClassClassInfoNil;
+begin
+  AssertNotNil(TType.GetTypeHandler(TClassInfoNilObject));
+end;
+
+procedure TTypeHandlerTest.TestObjectGetTypeInstanceClassInfoNil;
+var
+  o: TClassInfoNilObject;
+begin
+  o := TClassInfoNilObject.Create;
+  try
+    AssertNotNil(TType.GetTypeHandler(o));
+  finally
+    o.Free;
+  end;
+end;
+
+procedure TTypeHandlerTest.TestObjectGetTypeTypeInfoClassInfoNil;
+begin
+  AssertNotNil(TType.GetTypeHandler(TypeInfo(TClassInfoNilObject)));
+end;
+
+procedure TTypeHandlerTest.TestGetTypeTypeInfoNil;
+begin
+  try
+    TType.GetTypeHandler(TRuntimeTypeHandle(nil));
+  except
+    on EArgumentNil do
+      exit;
+  end;
+  AssertTrue(false);
 end;
 
 end.

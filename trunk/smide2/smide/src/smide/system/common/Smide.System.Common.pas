@@ -70,7 +70,7 @@ type
     constructor Create(Message: WideString; InnerException: Exception); overload;
 
     procedure AfterConstruction; override;
-    
+
     property Message: WideString read get_Message;
     property Parent: Exception read FParent write FParent;
 
@@ -130,9 +130,18 @@ type
   end;
 
   EUnknownType = class(ESystem)
+  public
+    constructor Create; override;
   end;
 
   ENotSupported = class(ESystem)
+  public
+    constructor Create; override;
+  end;
+
+  ENoClassInfo = class(ESystem)
+  public
+    constructor Create; override;
   end;
 
 type
@@ -233,7 +242,6 @@ function TStaticBase.SafeCallException(ExceptObject: TObject; ExceptAddr: Pointe
 begin
   raise EStaticAccess.Create;
 end;
-
 
 { Exception }
 
@@ -381,6 +389,29 @@ end;
 constructor EInvalidOperation.Create;
 begin
   inherited Create(_('Operation is not valid due to the current state of the object.'));
+end;
+
+{ EUnknownType }
+
+constructor EUnknownType.Create;
+begin
+  inherited;
+
+end;
+
+{ ENotSupported }
+
+constructor ENotSupported.Create;
+begin
+  inherited;
+
+end;
+
+{ ENoClassInfo }
+
+constructor ENoClassInfo.Create;
+begin
+  inherited Create(_('Cannot find class info for type.'));
 end;
 
 end.

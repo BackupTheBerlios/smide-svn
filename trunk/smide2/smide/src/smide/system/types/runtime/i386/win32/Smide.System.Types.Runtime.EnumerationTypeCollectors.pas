@@ -13,19 +13,12 @@ uses
 type
   TEnumerationTypeFieldCollector = class(TFieldCollector)
   private
-    FEnumType: TEnumerationType;
     FFields: TFieldInfoCollection;
   protected
-    function GetFieldInfos: TFieldInfoCollection; virtual;
+    function GetFieldInfos: TFieldInfoCollection; override;
   public
-    function GetField(Name: WideString; BindingAttr: TBindingFlags): TFieldInfo; override;
-    function GetFields(BindingAttr: TBindingFlags): IFieldInfoCollection; override;
-  public
-    constructor Create(EnumType: TEnumerationType); virtual;
+    constructor Create(OwnerType: TType); override;
     destructor Destroy; override;
-
-    property EnumType: TEnumerationType read FEnumType;
-    property Fields: TFieldInfoCollection read GetFieldInfos;
   end;
 
 const
@@ -40,56 +33,17 @@ uses
 
 { TEnumerationTypeFieldCollector }
 
-constructor TEnumerationTypeFieldCollector.Create(EnumType: TEnumerationType);
+constructor TEnumerationTypeFieldCollector.Create(OwnerType: TType);
 begin
-  if EnumType = nil then
-    raise EArgumentNil.Create('EnumType');
-  FEnumType := EnumType;
+  if not (OwnerType is TEnumerationType) then
+    raise EArgument.Create('OwnerType must be of TEnumerationType');
+  inherited;
 end;
 
 destructor TEnumerationTypeFieldCollector.Destroy;
 begin
   FFields.Free;
   inherited;
-end;
-
-function TEnumerationTypeFieldCollector.GetField(Name: WideString; BindingAttr: TBindingFlags): TFieldInfo;
-begin
-  Result := nil;
-end;
-
-function TEnumerationTypeFieldCollector.GetFields(BindingAttr: TBindingFlags): IFieldInfoCollection;
-var
-  i: Integer;
-  FieldInfo: TFieldInfo;
-begin
-  Result := TFieldInfoCollection.Create;
-  for i := 0 to Fields.Count - 1 do
-  begin
-    FieldInfo := Fields[i];
-
-    if FieldInfo.IsPublic then
-      if not (bfPublic in BindingAttr) then
-        continue
-      else
-    else
-      if not (bfNonPublic in BindingAttr) then
-        continue;
-
-    if FieldInfo.IsStatic then
-      if not (bfStatic in BindingAttr) then
-        continue
-      else
-    else
-      if not (bfInstance in BindingAttr) then
-        continue;
-
-    if FieldInfo.DeclaringType.RuntimeTypeHandle <> EnumType.RuntimeTypeHandle then
-      if (bfDeclaredOnly in BindingAttr) then
-        continue;
-
-    Result.Add(FieldInfo);
-  end;
 end;
 
 function TEnumerationTypeFieldCollector.GetFieldInfos: TFieldInfoCollection;
@@ -103,23 +57,23 @@ begin
     FFields := TFieldInfoCollection.Create(true);
 
     // Add the inherited Fields
-    if Assigned(EnumType.BaseType) then
+    if Assigned(OwnerType.BaseType) then
     begin
-      with EnumType.BaseType.GetFields.GetEnumerator do
+      with OwnerType.BaseType.GetFields.GetEnumerator do
         while MoveNext do
           if Current.FieldHandle <> FIELD_VALUE_HANDLE then
-            FFields.Add(TRuntimeInheritedFieldInfo.Create(Current, EnumType));
+            FFields.Add(TRuntimeInheritedFieldInfo.Create(Current, OwnerType));
     end
     else
     begin
-      P := @EnumType.RuntimeTypeInfoData^.NameList;
+      P := @OwnerType.RuntimeTypeInfoData^.NameList;
 
       // Special case Boolean types
-      if (EnumType as TRuntimeEnumerationType).IsBoolean then
+      if (OwnerType as TRuntimeEnumerationType).IsBoolean then
       begin
-        for i := EnumType.MaxValue downto EnumType.MinValue do
+        for i := OwnerType.MaxValue downto OwnerType.MinValue do
         begin
-          FieldInfo := TRuntimeEnumerationFieldInfo.Create(P, P^, EnumType, EnumType, EnumType, i);
+          FieldInfo := TRuntimeEnumerationFieldInfo.Create(P, P^, OwnerType, OwnerType, OwnerType, i);
           FFields.Add(FieldInfo);
 
           Inc(Integer(P), Length(P^) + 1);
@@ -127,9 +81,9 @@ begin
       end
       else
       begin
-        for i := EnumType.MinValue to EnumType.MaxValue do
+        for i := OwnerType.MinValue to OwnerType.MaxValue do
         begin
-          FieldInfo := TRuntimeEnumerationFieldInfo.Create(P, P^, EnumType, EnumType, EnumType, i);
+          FieldInfo := TRuntimeEnumerationFieldInfo.Create(P, P^, OwnerType, OwnerType, OwnerType, i);
           FFields.Add(FieldInfo);
 
           Inc(Integer(P), Length(P^) + 1);
@@ -138,8 +92,8 @@ begin
     end;
 
     // this is the value field
-    FieldInfo := TRuntimeFieldInfo.Create(FIELD_VALUE_HANDLE, FIELD_VALUE_NAME, EnumType, EnumType, [ftPublic, ftSpecialName, ftRTSpecialName],
-      TRuntimeType.GetRuntimeOrdinalType(EnumType.RuntimeTypeHandle));
+    FieldInfo := TRuntimeFieldInfo.Create(FIELD_VALUE_HANDLE, FIELD_VALUE_NAME, OwnerType, OwnerType, [faPublic, faSpecialName, faRTSpecialName],
+      TRuntimeType.GetRuntimeOrdinalType(OwnerType.RuntimeTypeHandle));
     FFields.Add(FieldInfo);
   end;
 
@@ -147,3 +101,4 @@ begin
 end;
 
 end.
+

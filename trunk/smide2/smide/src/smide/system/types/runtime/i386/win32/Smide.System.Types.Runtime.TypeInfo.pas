@@ -227,7 +227,7 @@ type
   TFieldTable = packed record
     Count: Word;
     FieldClassTable: PFieldClassTable;
-    Fields: packed array[0..0] of Byte;
+    Fields: Byte;
     { Fields: packed array [1..Count] of TVmtField; }
   end;
 

@@ -28,9 +28,11 @@ requires
   Smunit;
 
 contains
-  Tests.Smide.System.Types.TypeHandler in 'system\types\Tests.Smide.System.Types.TypeHandler.pas',
+  Tests.Smide.System.Types.TypeHandlers in 'system\types\Tests.Smide.System.Types.TypeHandlers.pas',
   Tests.Smide.System.Types.Enums in 'system\types\Tests.Smide.System.Types.Enums.pas',
   Tests.Smide.System.Types.AllTests in 'system\types\Tests.Smide.System.Types.AllTests.pas',
-  Tests.Smide.System.AllTests in 'system\Tests.Smide.System.AllTests.pas';
+  Tests.Smide.System.AllTests in 'system\Tests.Smide.System.AllTests.pas',
+  Tests.Smide.System.Types.Classes in 'system\types\Tests.Smide.System.Types.Classes.pas',
+  Tests.Smide.System.Types.Types in 'system\types\Tests.Smide.System.Types.Types.pas';
 
 end.

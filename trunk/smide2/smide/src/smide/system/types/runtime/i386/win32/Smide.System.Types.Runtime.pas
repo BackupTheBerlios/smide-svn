@@ -13,10 +13,18 @@ uses
 
 type
   TRuntimeType = class(TType)
+  private
+    class function GetClassTypeInfo(AClass: TClass): PTypeInfo;
   public
-    class function GetRuntimeType(TypeHandle: TRuntimeTypeHandle): TType;
+    class function GetRuntimeType(TypeHandle: TRuntimeTypeHandle): TType; overload;
+    class function GetRuntimeType(Instance: TObject): TType; overload;
+    class function GetRuntimeType(AClass: TClass): TType; overload;
     class function GetRuntimeOrdinalType(TypeHandle: TRuntimeTypeHandle): TType;
-    class function GetRuntimeTypeHandler(TypeHandle: TRuntimeTypeHandle): ITypeHandler;
+
+    class function GetRuntimeTypeHandler(TypeHandle: TRuntimeTypeHandle): ITypeHandler; overload;
+    class function GetRuntimeTypeHandler(Instance: TObject): ITypeHandler; overload;
+    class function GetRuntimeTypeHandler(AClass: TClass): ITypeHandler; overload;
+
     class function GetRuntimeOrdinalTypeHandler(TypeHandle: TRuntimeTypeHandle): ITypeHandler;
 
     class function CreateRuntimeType(TypeHandle: TRuntimeTypeHandle; TypeInfoData: TRuntimeTypeInfoData): TType;
@@ -145,7 +153,7 @@ type
   protected
     function get_OrdinalKind: TOrdinalKind; override;
   public
-    function GetElementType: TType; override;  
+    function GetElementType: TType; override;
   end;
 
   TRuntimeWideCharType = class(TWideCharType)
@@ -191,16 +199,22 @@ type
     function get_Namespace: WideString; override;
   protected // Attributes
     function get_Attributes: TTypeAttributes; override;
+
   private
     FMethodCollector: TMethodCollector;
-    function GetMethodCollector: TMethodCollector;
+    FFieldCollector: TFieldCollector;
+    function get_MethodCollector: TMethodCollector;
+    function get_FieldCollector: TFieldCollector;
   protected
-    property MethodCollector: TMethodCollector read GetMethodCollector;
+    property MethodCollector: TMethodCollector read get_MethodCollector;
+    property FieldCollector: TFieldCollector read get_FieldCollector;
   public // IReflect
     function GetMethod(Name: WideString; BindingAttr: TBindingFlags; Binder: TBinder;
       Types: ITypeCollection; Modifiers: array of TParameterModifier): TMethodInfo; override;
     function GetMethod(Name: WideString; BindingAttr: TBindingFlags): TMethodInfo; override;
     function GetMethods(BindingAttr: TBindingFlags): IMethodInfoCollection; override;
+    function GetField(Name: WideString; BindingAttr: TBindingFlags): TFieldInfo; override;
+    function GetFields(BindingAttr: TBindingFlags): IFieldInfoCollection; override;
   protected
     function get_BaseType: TType; override;
   public
@@ -299,6 +313,19 @@ begin
     raise EUnknownType.Create(TypeHandle.Name);
 end;
 
+class function TRuntimeType.GetRuntimeType(TypeHandle: TRuntimeTypeHandle): TType;
+begin
+  if TypeHandle = nil then
+    raise EArgumentNil.Create('TypeHandle');
+
+  Result := TTypeCache.GetType(TypeHandle);
+  if Result <> nil then
+    exit;
+
+  Result := CreateRuntimeType(TypeHandle, TRuntimeTypeInfoData(@TypeHandle^.Name[Byte(TypeHandle^.Name[0]) + 1]));
+  TTypeCache.AddType(TypeHandle, Result);
+end;
+
 class function TRuntimeType.GetRuntimeOrdinalType(TypeHandle: TRuntimeTypeHandle): TType;
 begin
   Result := TTypeCache.GetType(TypeHandle);
@@ -320,14 +347,33 @@ begin
   TTypeCache.AddTypeHandler(TypeHandle, Result);
 end;
 
-class function TRuntimeType.GetRuntimeType(TypeHandle: TRuntimeTypeHandle): TType;
+class function TRuntimeType.GetRuntimeType(Instance: TObject): TType;
 begin
-  Result := TTypeCache.GetType(TypeHandle);
-  if Result <> nil then
-    exit;
+  if Instance = nil then
+    raise EArgumentNil.Create('Instance');
 
-  Result := CreateRuntimeType(TypeHandle, TRuntimeTypeInfoData(@TypeHandle^.Name[Byte(TypeHandle^.Name[0]) + 1]));
-  TTypeCache.AddType(TypeHandle, Result);
+  Result := GetType(GetClassTypeInfo(Instance.ClassType));
+end;
+
+class function TRuntimeType.GetClassTypeInfo(AClass: TClass): PTypeInfo;
+begin
+  if AClass.ClassInfo = nil then
+  begin
+    Result := PPTypeInfo(Integer(PPointer(Integer(AClass) + vmtClassName)^) + PByte(PPointer(Integer(AClass) + vmtClassName)^)^ + 1)^;
+
+    if Result = nil then
+      raise ENoClassInfo.Create(AClass.ClassName);
+  end
+  else
+    Result := AClass.ClassInfo;
+end;
+
+class function TRuntimeType.GetRuntimeType(AClass: TClass): TType;
+begin
+  if AClass = nil then
+    raise EArgumentNil.Create('AClass');
+
+  Result := GetType(GetClassTypeInfo(AClass));
 end;
 
 class function TRuntimeType.GetRuntimeTypeDataTypeHandler: ITypeHandler;
@@ -343,6 +389,9 @@ end;
 
 class function TRuntimeType.GetRuntimeTypeHandler(TypeHandle: TRuntimeTypeHandle): ITypeHandler;
 begin
+  if TypeHandle = nil then
+    raise EArgumentNil.Create('TypeHandle');
+
   Result := TTypeCache.GetTypeHandler(TypeHandle);
 
   if Result <> nil then
@@ -350,6 +399,22 @@ begin
 
   Result := CreateRuntimeType(TypeHandle, TRuntimeTypeInfoData(@TypeHandle^.Name[Byte(TypeHandle^.Name[0]) + 1]));
   TTypeCache.AddTypeHandler(TypeHandle, Result);
+end;
+
+class function TRuntimeType.GetRuntimeTypeHandler(Instance: TObject): ITypeHandler;
+begin
+  if Instance = nil then
+    raise EArgumentNil.Create('Instance');
+
+  Result := GetTypeHandler(GetClassTypeInfo(Instance.ClassType));
+end;
+
+class function TRuntimeType.GetRuntimeTypeHandler(AClass: TClass): ITypeHandler;
+begin
+  if AClass = nil then
+    raise EArgumentNil.Create('AClass');
+
+  Result := GetTypeHandler(GetClassTypeInfo(AClass));
 end;
 
 { TRuntimeRangeOrdinalType }
@@ -738,7 +803,6 @@ end;
 
 function TRuntimeClassType.GetMethod(Name: WideString; BindingAttr: TBindingFlags): TMethodInfo;
 begin
-  // TODO:
   Result := MethodCollector.GetMethod(Name, BindingAttr, nil, nil, []);
 end;
 
@@ -752,7 +816,7 @@ begin
   Result := RuntimeTypeInfoData^.UnitName;
 end;
 
-function TRuntimeClassType.GetMethodCollector: TMethodCollector;
+function TRuntimeClassType.get_MethodCollector: TMethodCollector;
 begin
   if not Assigned(FMethodCollector) then
     FMethodCollector := TClassTypeMethodCollector.CreateMethodCollector(Self);
@@ -762,7 +826,25 @@ end;
 destructor TRuntimeClassType.Destroy;
 begin
   FMethodCollector.Free;
+  FFieldCollector.Free;
   inherited;
+end;
+
+function TRuntimeClassType.get_FieldCollector: TFieldCollector;
+begin
+  if not Assigned(FFieldCollector) then
+    FFieldCollector := TClassTypeFieldCollector.Create(Self);
+  Result := FFieldCollector;
+end;
+
+function TRuntimeClassType.GetField(Name: WideString; BindingAttr: TBindingFlags): TFieldInfo;
+begin
+  Result := FieldCollector.GetField(Name, BindingAttr);
+end;
+
+function TRuntimeClassType.GetFields(BindingAttr: TBindingFlags): IFieldInfoCollection;
+begin
+  Result := FieldCollector.GetFields(BindingAttr);
 end;
 
 { TRuntimeInterfaceType }
@@ -802,7 +884,7 @@ end;
 
 function TRuntimeSetType.GetElementType: TType;
 begin
-  result := TType.GetType(RuntimeTypeInfoData^.CompType^);
+  Result := TType.GetType(RuntimeTypeInfoData^.CompType^);
 end;
 
 function TRuntimeSetType.get_OrdinalKind: TOrdinalKind;

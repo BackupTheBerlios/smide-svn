@@ -1551,7 +1551,7 @@ function TSetType.get_TypeSize: Integer;
 begin
   with GetElementType do
     Result := MaxValue div 8 - MinValue div 8 + 1;
-  // word Padding ???
+  // cause word alignment, 3 byte sets are always 4 bytes
   if Result = 3 then
     Result := 4;
 end;
