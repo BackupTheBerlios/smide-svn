@@ -20,9 +20,9 @@ type
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider = nil): WideString; override;
-
-    function get_TypeSize: Integer; override;
   protected
+    function get_TypeSize: Integer; override;
+  protected // TType
     function get_BaseType: TType; override;
   end;
 
@@ -55,9 +55,10 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
   protected
+    function get_TypeSize: Integer; override;
+  protected // TType
     function get_OrdinalKind: TOrdinalKind; virtual; abstract;
   public
     property OrdinalKind: TOrdinalKind read get_OrdinalKind;
@@ -144,8 +145,9 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   public // TDataType overrides
     procedure Alloc(var Result: TTypeData); override;
     procedure Dispose(var Value: TTypeData); override;
@@ -168,7 +170,14 @@ type
 
   TSetType = class(TOrdinalType)
   public
+    procedure ValueToData(const Value; out Data: TTypeData); override;
+    procedure DataToValue(const Data: TTypeData; var Value); override;
+    procedure FreeData(var Data: TTypeData); override;
+    procedure ClearValue(var Value); override;
+    function CompareValues(const Value1; const Value2): Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   end;
 
   TWideCharType = class(TRangeOrdinalType)
@@ -189,8 +198,9 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   public // TDataType overrides
     procedure Alloc(var Result: TTypeData); override;
     procedure Dispose(var Value: TTypeData); override;
@@ -203,8 +213,9 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   public // TDataType overrides
     procedure Alloc(var Result: TTypeData); override;
     procedure Dispose(var Value: TTypeData); override;
@@ -217,8 +228,9 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   public // TDataType overrides
     procedure Alloc(var Result: TTypeData); override;
     procedure Dispose(var Value: TTypeData); override;
@@ -231,8 +243,9 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   public // TDataType overrides
     procedure Alloc(var Result: TTypeData); override;
     procedure Dispose(var Value: TTypeData); override;
@@ -245,8 +258,9 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   public // TDataType overrides
     procedure Alloc(var Result: TTypeData); override;
     procedure Dispose(var Value: TTypeData); override;
@@ -259,8 +273,9 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   public // TDataType overrides
     procedure Alloc(var Result: TTypeData); override;
     procedure Dispose(var Value: TTypeData); override;
@@ -273,8 +288,9 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   public // TDataType overrides
     procedure Alloc(var Result: TTypeData); override;
     procedure Dispose(var Value: TTypeData); override;
@@ -287,8 +303,9 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   public // TDataType overrides
     procedure Alloc(var Result: TTypeData); override;
     procedure Dispose(var Value: TTypeData); override;
@@ -301,8 +318,9 @@ type
     function CompareValues(const Value1; const Value2): Integer; override;
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
-    function get_TypeSize: Integer; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
+    function get_TypeSize: Integer; override;
   end;
 
   TMethodType = class(TVoidType)
@@ -318,6 +336,7 @@ type
     function EqualsValues(const Value1; const Value2): Boolean; override;
     function SameValues(const Value1; const Value2): Boolean; override;
     function FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString; override;
+  protected
     function get_TypeSize: Integer; override;
   end;
 
@@ -1450,37 +1469,97 @@ end;
 
 { TSetType }
 
-type
-  TIntegerSet = set of 0..SizeOf(Integer) * 8 - 1;
+procedure TSetType.ClearValue(var Value);
+begin
+  FillChar(Value, TypeSize, 0);
+end;
+
+function TSetType.CompareValues(const Value1, Value2): Integer;
+var
+  v1, v2: set of Byte;
+begin
+  v1 := [];
+  Move(Value1, v1, TypeSize);
+
+  v2 := [];
+  Move(Value2, v2, TypeSize);
+
+  Result := Integer(((v1 - v2) <> []) or ((v2 - v1) <> []));
+end;
+
+procedure TSetType.DataToValue(const Data: TTypeData; var Value);
+begin
+  Move(Data^, Value, TypeSize);
+end;
 
 function TSetType.FormatValueToString(Format: WideString; const Value; FormatProvider: IFormatProvider): WideString;
 var
-  S: TIntegerSet;
+  S: set of Byte;
   i: Integer;
+  l: Integer;
   v: Integer;
 begin
   Result := '';
-  v := 0;
-  case OrdinalKind of
-    okUnsignedByte: v := Byte(Value);
-    okSignedByte: v := ShortInt(Value);
-    otUnsignedWord: v := Word(Value);
-    okSignedWord: v := SmallInt(Value);
-    otUnsignedLong: v := Cardinal(Value);
-    otSignedLong: v := Integer(Value);
-  else
-    raise EUnknownType.Create(Name);
-  end;
 
-  S := TIntegerSet(v);
+  S := [];
+  Move(Value, S, TypeSize);
 
-  for i := 0 to SizeOf(Integer) * 8 - 1 do
+  i := 0;
+  while i < 256 do
+  begin
     if i in S then
     begin
       if Result <> '' then
         Result := Result + ', ';
-      Result := Result + GetElementType.ValueToString(i);
-    end;
+      with GetElementType do
+        v := i + (MinValue - MinValue mod 8);
+      Result := Result + GetElementType.ValueToString(v);
+      Inc(i);
+      if i in S then
+      begin
+        l := i;
+
+        Inc(i);
+        while (i < 256) and (i in S) do
+        begin
+          Inc(i);
+        end;
+
+        if i > l + 1 then
+        begin
+          l := i - 1;
+          with GetElementType do
+            v := l + (MinValue - MinValue mod 8);
+          Result := Result + '..' + GetElementType.ValueToString(l);
+        end
+        else
+          i := l;
+      end;
+    end
+    else
+      Inc(i);
+  end;
+end;
+
+procedure TSetType.FreeData(var Data: TTypeData);
+begin
+  FreeMem(Data, TypeSize);
+  Data := nil;
+end;
+
+function TSetType.get_TypeSize: Integer;
+begin
+  with GetElementType do
+    Result := MaxValue div 8 - MinValue div 8 + 1;
+  // word Padding ???
+  if Result = 3 then
+    Result := 4;
+end;
+
+procedure TSetType.ValueToData(const Value; out Data: TTypeData);
+begin
+  GetMem(Data, TypeSize);
+  Move(Value, Data^, TypeSize);
 end;
 
 end.

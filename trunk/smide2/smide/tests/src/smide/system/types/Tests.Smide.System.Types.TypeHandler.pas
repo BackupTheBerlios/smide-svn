@@ -40,7 +40,9 @@ type
     procedure TestLongBool;
     procedure TestByteBool;
     procedure TestWordBool;
-    procedure TestSet;
+    procedure TestSetConstants;
+    procedure TestSetChar;
+    procedure TestSetCustomType;
     procedure TestUserShortString;
     procedure TestUserTypeInteger;
   end;
@@ -73,7 +75,7 @@ begin
 
   AssertNotNil('Not Nil', P);
   TypeHandler.FreeData(P);
-  AssertNil('Asser Nil', P);
+  AssertNil('Assert Nil', P);
 end;
 
 procedure TTypeHandlerTest.TestInteger;
@@ -330,20 +332,55 @@ begin
 end;
 
 type
-  TTestSet = set of (S0, S1, S2);
+  TTestSetConstants = set of (S0, S1, S2);
 
-procedure TTypeHandlerTest.TestSet;
+procedure TTypeHandlerTest.TestSetConstants;
 var
-  Value1, Value2: TTestSet;
-  Expected1, Expected2: TTestSet;
+  Value1, Value2: TTestSetConstants;
+  Expected1, Expected2: TTestSetConstants;
 begin
   Value1 := [S1, S2];
   Value2 := [S1];
-  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSet)), SizeOf(Value1), Value1, Value2, 'S1, S2', 'S1');
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetConstants)), SizeOf(Value1), Value1, Value2, 'S1, S2', 'S1');
   Expected1 := [];
   Expected2 := [S1, S2];
-  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSet)), Expected1, Value1);
-  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSet)), Expected2, Value2);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetConstants)), Expected1, Value1);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetConstants)), Expected2, Value2);
+end;
+
+type
+  TTestSetChar = set of Char;
+
+procedure TTypeHandlerTest.TestSetChar;
+var
+  Value1, Value2: TTestSetChar;
+  Expected1, Expected2: TTestSetChar;
+begin
+  Value1 := ['a'..'f', 'A'..'Z'];
+  Value2 := ['2', '5'];
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetChar)), SizeOf(Value1), Value1, Value2, 'A..Z, a..f', '2, 5');
+  Expected1 := [];
+  Expected2 := ['a'..'f', 'A'..'Z'];
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetChar)), Expected1, Value1);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetChar)), Expected2, Value2);
+end;
+
+type
+  TTestCustomType = 64..65;
+  TTestSetCustomType = set of TTestCustomType;
+
+procedure TTypeHandlerTest.TestSetCustomType;
+var
+  Value1, Value2: TTestSetCustomType;
+  Expected1, Expected2: TTestSetCustomType;
+begin
+  Value1 := [64];
+  Value2 := [64, 65];
+  TestTypeValues(TType.GetTypeHandler(TypeInfo(TTestSetCustomType)), SizeOf(Value1), Value1, Value2, '64', '64, 65');
+  Expected1 := [];
+  Expected2 := [64];
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType)), Expected1, Value1);
+  AssertEquals(TType.GetTypeHandler(TypeInfo(TTestSetCustomType)), Expected2, Value2);
 end;
 
 procedure TTypeHandlerTest.TestShortString;

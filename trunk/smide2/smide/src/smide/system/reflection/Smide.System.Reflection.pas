@@ -384,7 +384,7 @@ type
   private
     FRuntimeTypeHandle: TRuntimeTypeHandle;
     FRuntimeTypeInfoData: TRuntimeTypeInfoData;
-  public
+  protected
     function get_TypeSize: Integer; virtual;
     function get_RuntimeTypeHandle: TRuntimeTypeHandle;
     function get_RuntimeTypeInfoData: TRuntimeTypeInfoData;
